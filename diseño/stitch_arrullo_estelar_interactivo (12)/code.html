@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "primary": "#8A2BE2",
+                "on-surface": "#e6e3f5",
+                "surface-dim": "#0d0d19",
+              },
+              "borderRadius": {
+                "DEFAULT": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "0.5rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "headline": ["Playfair Display", "serif"],
+                "body": ["Manrope", "sans-serif"],
+                "serif-fancy": ["Playfair Display", "serif"],
+                "pixel": ["'Press Start 2P'", "cursive"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0d19;
+            color: #e6e3f5;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .pixel-scanline {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .ethereal-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(138, 43, 226, 0.2);
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
+        }
+    
+        @keyframes messageFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .romantic-message {
+            font-family: 'Press Start 2P', cursive;
+            animation: messageFade 4s ease-in-out forwards;
+            text-shadow: 2px 2px #000;
+        }
+
+        /* Animation for Fireflies/Sparkles */
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            filter: blur(1px);
+            pointer-events: none;
+        }
+
+        /* Vivid Meteor Shower */
+        @keyframes vividMeteor {
+            0% { transform: translateX(0) translateY(0) rotate(35deg); opacity: 0; width: 0px; }
+            10% { opacity: 1; width: 100px; }
+            40% { opacity: 1; }
+            100% { transform: translateX(-500px) translateY(500px) rotate(35deg); opacity: 0; width: 2px; }
+        }
+        .vivid-meteor {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+            pointer-events: none;
+            opacity: 0;
+            filter: drop-shadow(0 0 4px currentColor);
+        }
+
+        .scene {
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary/30 selection:text-white m-0 p-0 overflow-hidden w-screen h-screen">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0 overflow-hidden" id="bg-container">
+<!-- Main Fullscreen Background -->
+<div class="scene absolute inset-0 opacity-100 transition-opacity duration-1000" id="scene-main">
+<img alt="Couple in a boat on a serene lake" class="w-full h-full object-cover block" src="https://lh3.googleusercontent.com/aida/ADBb0ugCPUsYpO-ufdYcQp7WAZ1gUg9mSdVY_BZjHodiCdu29-WqWLbjqX2SFLNedXaHcwnoB7YdcjqMCSl3m8bAssZX0_l7j-d_hjb-b2jBdbq0ijblwvSdKbf3LPefht5Oz4POa5wPZRgqG5_MIR2eK57plp4S4He4JdFWuLndvDHKLisknFi0JjqI_XFqyMTSZsVNNiC_rRRaKMgwWT4EwzeuuPDhQFkry2cg_Dz-UHhmawIT50t81fy0PX94iIVHFLFYAHtrwwjE"/>
+</div>
+<!-- Vivid Beach Scene (Initially Hidden) -->
+<div class="scene absolute inset-0 opacity-0 transition-opacity duration-1000" id="scene-beach">
+<img alt="Pixel art beach sunset scene" class="w-full h-full object-cover block" src="https://lh3.googleusercontent.com/aida/ADBb0uggM2zJuptLmkGn3Z1K4HF3Vzu7lgKSQZXgBnSh1tJmq00AGWEPZ9AsrSyuKCGpc2ABYWU_iCs2LQO0nHy-RVlFe8yTrRt_Cm8BPPWs-TRnAJb5QSkP_7hpXp3svwYSwBD-I-FQId3nYRULo2dTKr_E-ocQ9dmuEyr2-ghOEESIITpeLsXqTyW8o7MTK_AatvSn7FNhkgxTc2RN-fMbihLMt5Z6WIvPS04ykNn9LzQgvv9vGLEp9QKhtH-4oVzVIrV1ZcHwpL9E"/>
+<!-- Overlay for vivid animations -->
+<div class="absolute inset-0 overflow-hidden" id="vivid-animations"></div>
+</div>
+<!-- Scanline Overlay -->
+<div class="absolute inset-0 pixel-scanline z-10 opacity-10"></div>
+</div>
+<!-- UI Layer -->
+<div class="relative z-20 min-h-screen flex flex-col pointer-events-none">
+<!-- Main Content Area: Centered Lyrics -->
+<main class="flex-grow flex items-center justify-center pointer-events-auto">
+<section class="text-center px-6 max-w-4xl">
+<div id="lyrics-content">
+<p class="font-serif-fancy italic text-4xl md:text-6xl text-white ethereal-glow leading-relaxed tracking-wide" id="main-lyrics">
+                    En el faro de tu amor...
+                </p>
+</div>
+</section>
+<!-- Right-Side Vertical Icon Menu -->
+<aside class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-12 items-center">
+<button class="group transition-all duration-300 pointer-events-auto" onclick="showRomanticMessage()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">favorite</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">sports_esports</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto" onclick="toggleToVividBeach()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">landscape</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">music_note</span>
+</button>
+</aside>
+</main>
+<!-- Footer Area -->
+<footer class="h-32 flex flex-col items-center justify-center relative px-8 pointer-events-none">
+<!-- Message Container -->
+<div class="absolute top-0 w-full flex justify-center h-12 overflow-visible" id="romantic-message-container"></div>
+<!-- Subtle Info -->
+<div class="mt-auto pb-8 w-full flex justify-between items-center opacity-40 pointer-events-auto">
+<div class="text-[10px] uppercase tracking-[0.4em] text-white font-body" id="status-label">
+                Ether Lullaby // Audio_Stream_Active
+            </div>
+<div class="text-[8px] uppercase tracking-widest text-white font-pixel">
+                Sync Status: Stable
+            </div>
+</div>
+</footer>
+</div>
+<script>
+    const messages = [
+        'Eres mi universo',
+        'Tu amor es mi guía',
+        'Siempre juntos',
+        'Bajo las mismas estrellas',
+        'Mi corazón es tuyo',
+        'Contigo el tiempo se detiene',
+        'Eternamente en tus ojos'
+    ];
+    const colors = ['#FFDAB9', '#FFB7C5', '#FFD700', '#00FFFF', '#FF00FF']; 
+    let colorIndex = 0;
+    let isVivid = false;
+    let meteorInterval;
+    let sparkleInterval;
+
+    function showRomanticMessage() {
+        const container = document.getElementById('romantic-message-container');
+        container.innerHTML = '';
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        const color = colors[colorIndex % 3]; // Keep romantic colors simple
+        colorIndex = (colorIndex + 1) % colors.length;
+        const msgElement = document.createElement('p');
+        msgElement.className = 'romantic-message text-xs md:text-sm tracking-tighter text-center max-w-sm';
+        msgElement.style.color = color;
+        msgElement.innerText = msg;
+        container.appendChild(msgElement);
+    }
+
+    function spawnVividMeteor() {
+        if (!isVivid) return;
+        const container = document.getElementById('vivid-animations');
+        const meteor = document.createElement('div');
+        meteor.className = 'vivid-meteor';
+        
+        const startX = Math.random() * 120 + 20; // Start from top right areas
+        const startY = Math.random() * 40 - 10;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        meteor.style.left = startX + '%';
+        meteor.style.top = startY + '%';
+        meteor.style.color = color;
+        meteor.style.backgroundColor = color;
+        meteor.style.animation = `vividMeteor ${1 + Math.random() * 1}s linear forwards`;
+        
+        container.appendChild(meteor);
+        setTimeout(() => meteor.remove(), 2000);
+    }
+
+    function spawnSparkle() {
+        if (!isVivid) return;
+        const container = document.getElementById('vivid-animations');
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        sparkle.style.boxShadow = `0 0 10px ${sparkle.style.backgroundColor}`;
+        sparkle.style.animation = `sparkle ${1 + Math.random() * 2}s infinite ease-in-out`;
+        
+        container.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 3000);
+    }
+
+    function toggleToVividBeach() {
+        const mainScene = document.getElementById('scene-main');
+        const beachScene = document.getElementById('scene-beach');
+        const lyrics = document.getElementById('main-lyrics');
+        const status = document.getElementById('status-label');
+        
+        if (!isVivid) {
+            mainScene.classList.replace('opacity-100', 'opacity-0');
+            beachScene.classList.replace('opacity-0', 'opacity-100');
+            isVivid = true;
+            
+            // Start vivid animations
+            meteorInterval = setInterval(spawnVividMeteor, 400);
+            sparkleInterval = setInterval(spawnSparkle, 150);
+            
+            // Change UI text to match vibe
+            lyrics.innerText = "Donde el sol abraza el mar...";
+            status.innerText = "Vivid Horizon // Hyper_Sync_Active";
+            
+            // Initial burst
+            for(let i=0; i<15; i++) setTimeout(spawnSparkle, i * 50);
+        } else {
+            mainScene.classList.replace('opacity-0', 'opacity-100');
+            beachScene.classList.replace('opacity-100', 'opacity-0');
+            isVivid = false;
+            
+            clearInterval(meteorInterval);
+            clearInterval(sparkleInterval);
+            document.getElementById('vivid-animations').innerHTML = '';
+            
+            lyrics.innerText = "En el faro de tu amor...";
+            status.innerText = "Ether Lullaby // Audio_Stream_Active";
+        }
+    }
+</script>
+</body></html>

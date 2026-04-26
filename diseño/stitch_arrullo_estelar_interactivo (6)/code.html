@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "primary": "#8A2BE2",
+                "on-surface": "#e6e3f5",
+                "surface-dim": "#0d0d19",
+              },
+              "borderRadius": {
+                "DEFAULT": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "0.5rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "headline": ["Playfair Display", "serif"],
+                "body": ["Manrope", "sans-serif"],
+                "serif-fancy": ["Playfair Display", "serif"],
+                "pixel": ["'Press Start 2P'", "cursive"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0d19;
+            color: #e6e3f5;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .pixel-scanline {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .dither-pattern {
+            background-image: radial-gradient(#181827 1px, transparent 0);
+            background-size: 4px 4px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .ethereal-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(138, 43, 226, 0.2);
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
+        }
+    
+        @keyframes messageFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .romantic-message {
+            font-family: 'Press Start 2P', cursive;
+            animation: messageFade 4s ease-in-out forwards;
+            text-shadow: 2px 2px #000;
+        }
+
+        /* Animation for Fireflies */
+        @keyframes firefly {
+            0%, 100% { opacity: 0; transform: translate(0, 0) scale(1); }
+            50% { opacity: 0.8; transform: translate(10px, -20px) scale(1.2); }
+        }
+        .firefly {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #d4ff00;
+            box-shadow: 0 0 5px #d4ff00;
+            border-radius: 1px;
+            pointer-events: none;
+        }
+
+        /* Animation for Fish */
+        @keyframes fishJump {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translateY(-40px) rotate(180deg); }
+            80% { opacity: 1; }
+            100% { transform: translateY(10px) rotate(360deg); opacity: 0; }
+        }
+        .pixel-fish {
+            position: absolute;
+            width: 8px;
+            height: 4px;
+            background: #4a5568;
+            clip-path: polygon(0% 50%, 40% 0%, 100% 50%, 40% 100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Animation for Ripples */
+        @keyframes rippleEffect {
+            0% { transform: scale(0.5); opacity: 0.8; border-width: 2px; }
+            100% { transform: scale(3); opacity: 0; border-width: 1px; }
+        }
+        .ripple {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .scene {
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary/30 selection:text-white m-0 p-0 overflow-hidden w-screen h-screen">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0 overflow-hidden">
+<!-- Main Fullscreen Background -->
+<div class="scene absolute inset-0 opacity-100" id="scene-main">
+<img alt="Couple in a boat on a serene lake under a crescent moon and meteor shower" class="w-full h-full object-cover block" src="https://lh3.googleusercontent.com/aida/ADBb0ugCPUsYpO-ufdYcQp7WAZ1gUg9mSdVY_BZjHodiCdu29-WqWLbjqX2SFLNedXaHcwnoB7YdcjqMCSl3m8bAssZX0_l7j-d_hjb-b2jBdbq0ijblwvSdKbf3LPefht5Oz4POa5wPZRgqG5_MIR2eK57plp4S4He4JdFWuLndvDHKLisknFi0JjqI_XFqyMTSZsVNNiC_rRRaKMgwWT4EwzeuuPDhQFkry2cg_Dz-UHhmawIT50t81fy0PX94iIVHFLFYAHtrwwjE"/>
+<!-- Interactive Elements Overlay -->
+<div class="absolute inset-0" id="lake-elements"></div>
+</div>
+<!-- Shooting Stars Overlay (Subtle) -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[-5%] left-[10%] w-[2px] h-24 bg-white/20 rotate-[25deg]"></div>
+<div class="absolute top-[10%] left-[25%] w-[2px] h-32 bg-white/10 rotate-[25deg]"></div>
+<div class="absolute top-[0%] left-[40%] w-[2px] h-20 bg-white/20 rotate-[25deg]"></div>
+<div class="absolute top-[30%] left-[5%] w-[2px] h-16 bg-white/10 rotate-[25deg]"></div>
+<div class="absolute top-[50%] left-[75%] w-[2px] h-28 bg-white/10 rotate-[25deg]"></div>
+</div>
+<!-- Scanline Overlay for texture -->
+<div class="absolute inset-0 pixel-scanline z-10 opacity-10"></div>
+</div>
+<!-- UI Layer -->
+<div class="relative z-20 min-h-screen flex flex-col pointer-events-none">
+<!-- Main Content Area: Centered Lyrics -->
+<main class="flex-grow flex items-center justify-center pointer-events-auto">
+<section class="text-center px-6 max-w-4xl">
+<div id="lyrics-content">
+<p class="font-serif-fancy italic text-4xl md:text-6xl text-white ethereal-glow leading-relaxed tracking-wide">
+                    En el faro de tu amor...
+                </p>
+</div>
+</section>
+<!-- Right-Side Vertical Icon Menu -->
+<aside class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-12 items-center">
+<button class="group transition-all duration-300 pointer-events-auto" onclick="showRomanticMessage()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">favorite</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">sports_esports</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto" onclick="spawnEffect()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">landscape</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">music_note</span>
+</button>
+</aside>
+</main>
+<!-- Footer Area -->
+<footer class="h-32 flex flex-col items-center justify-center relative px-8 pointer-events-none">
+<!-- Message Container -->
+<div class="absolute top-0 w-full flex justify-center h-12 overflow-visible" id="romantic-message-container"></div>
+<!-- Subtle Info -->
+<div class="mt-auto pb-8 w-full flex justify-between items-center opacity-40 pointer-events-auto">
+<div class="text-[10px] uppercase tracking-[0.4em] text-white font-body">
+                Ether Lullaby // Audio_Stream_Active
+            </div>
+<div class="text-[8px] uppercase tracking-widest text-white font-pixel">
+                Sync Status: Stable
+            </div>
+</div>
+</footer>
+</div>
+<script>
+    const messages = [
+        'Eres mi universo',
+        'Tu amor es mi guía',
+        'Siempre juntos',
+        'Bajo las mismas estrellas',
+        'Mi corazón es tuyo',
+        'Contigo el tiempo se detiene',
+        'Eternamente en tus ojos'
+    ];
+    const colors = ['#FFDAB9', '#FFB7C5', '#FFD700']; 
+    let colorIndex = 0;
+
+    function showRomanticMessage() {
+        const container = document.getElementById('romantic-message-container');
+        container.innerHTML = '';
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        const color = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length;
+        const msgElement = document.createElement('p');
+        msgElement.className = 'romantic-message text-xs md:text-sm tracking-tighter text-center max-w-sm';
+        msgElement.style.color = color;
+        msgElement.innerText = msg;
+        container.appendChild(msgElement);
+    }
+
+    function spawnEffect() {
+        startLakeAnimations();
+    }
+
+    function startLakeAnimations() {
+        const container = document.getElementById('lake-elements');
+        
+        // One-time fireflies burst
+        for(let i=0; i<10; i++) {
+            const ff = document.createElement('div');
+            ff.className = 'firefly';
+            ff.style.left = Math.random() * 100 + '%';
+            ff.style.top = (60 + Math.random() * 30) + '%';
+            ff.style.animation = `firefly ${3 + Math.random() * 4}s infinite ease-in-out`;
+            container.appendChild(ff);
+            setTimeout(() => ff.remove(), 7000);
+        }
+
+        // Spawn a fish and ripple near the boat area
+        const x = 40 + Math.random() * 20;
+        const y = 75 + Math.random() * 10;
+
+        // Ripple
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple';
+        ripple.style.left = x + '%';
+        ripple.style.top = y + '%';
+        ripple.style.width = '10px';
+        ripple.style.height = '5px';
+        ripple.style.animation = 'rippleEffect 2s forwards';
+        container.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 2000);
+
+        // Fish
+        setTimeout(() => {
+            const fish = document.createElement('div');
+            fish.className = 'pixel-fish';
+            fish.style.left = x + '%';
+            fish.style.top = y + '%';
+            fish.style.animation = 'fishJump 1.5s ease-in-out forwards';
+            container.appendChild(fish);
+            setTimeout(() => fish.remove(), 1500);
+        }, 100);
+    }
+
+    // Passive ambiance
+    setInterval(() => {
+        if (Math.random() > 0.7) startLakeAnimations();
+    }, 8000);
+</script>
+</body></html>

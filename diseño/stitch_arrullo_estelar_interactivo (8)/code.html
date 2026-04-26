@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ether Lullaby | Game Universe</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Be+Vietnam+Pro:wght@100;300;400;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .pixel-font { font-family: 'Press Start 2P', cursive; }
+        .glass-panel {
+            background: rgba(14, 14, 20, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glow-cyan { box-shadow: 0 0 50px -10px rgba(0, 251, 251, 0.15); }
+        .glow-magenta { box-shadow: 0 0 50px -10px rgba(255, 81, 250, 0.15); }
+        .star-trail {
+            background: linear-gradient(90deg, transparent, #ca98ff, transparent);
+            height: 1px;
+            width: 100%;
+        }
+        .cosmic-gradient-cyan {
+            background: radial-gradient(circle at top right, rgba(0, 251, 251, 0.1), transparent 70%);
+        }
+        .cosmic-gradient-magenta {
+            background: radial-gradient(circle at top right, rgba(255, 81, 250, 0.1), transparent 70%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed": "#c185ff",
+                        "on-background": "#f0ecf6",
+                        "tertiary-dim": "#ff51fa",
+                        "on-tertiary-fixed-variant": "#6a006a",
+                        "primary-container": "#c185ff",
+                        "secondary-container": "#006a6a",
+                        "on-secondary-fixed-variant": "#006666",
+                        "outline-variant": "#48474e",
+                        "outline": "#76747c",
+                        "tertiary-fixed": "#ff81f5",
+                        "tertiary": "#ff51fa",
+                        "error": "#ff6e84",
+                        "surface-container-lowest": "#000000",
+                        "tertiary-container": "#fe00fe",
+                        "surface-container-low": "#131319",
+                        "error-container": "#a70138",
+                        "on-secondary-container": "#d9fffe",
+                        "on-tertiary-container": "#230023",
+                        "inverse-primary": "#8523dd",
+                        "surface-bright": "#2c2b35",
+                        "primary-dim": "#9c42f4",
+                        "error-dim": "#d73357",
+                        "primary": "#ca98ff",
+                        "on-secondary": "#005c5c",
+                        "on-error-container": "#ffb2b9",
+                        "secondary-fixed": "#00fbfb",
+                        "surface-dim": "#0e0e14",
+                        "primary-fixed-dim": "#b772ff",
+                        "on-secondary-fixed": "#004747",
+                        "inverse-surface": "#fcf8ff",
+                        "surface-tint": "#ca98ff",
+                        "surface-container": "#191920",
+                        "surface-variant": "#25252e",
+                        "on-tertiary-fixed": "#320032",
+                        "on-primary-fixed": "#000000",
+                        "surface": "#0e0e14",
+                        "tertiary-fixed-dim": "#ff61f8",
+                        "on-surface": "#f0ecf6",
+                        "surface-container-high": "#1f1f27",
+                        "surface-container-highest": "#25252e",
+                        "background": "#0e0e14",
+                        "on-primary": "#46007d",
+                        "secondary-dim": "#00ecec",
+                        "on-primary-fixed-variant": "#420078",
+                        "on-primary-container": "#350062",
+                        "on-surface-variant": "#acaab2",
+                        "on-error": "#490013",
+                        "secondary-fixed-dim": "#00ecec",
+                        "on-tertiary": "#400040",
+                        "secondary": "#00fbfb",
+                        "inverse-on-surface": "#55545c"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"],
+                        "serif": ["Playfair Display"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 min-h-screen flex flex-col overflow-x-hidden">
+<!-- Hero Background Animation Layer -->
+<div class="fixed inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60" data-alt="Dreamy 16-bit pixel art night sky with vibrant nebula clouds and two silhouettes in a small wooden boat on calm dark water" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4AHzPgiiW9vIIiY88amknMHpfF3Yy_-z2iFotZVxTl9d1x-9_XQ6mkDb6DMhP8WVAPxYfXR9Q1cxk_5YpQRDVF8dKgys1incy0bA0wSQK50XgsUMxY1jHNb7hjsGT4aGHsyoN6LuO1-ZI1d3LIMeBLuUtZGC83euS7DGAxt_gAGfzm7UGmwrckgdhZ89Z86dxFCuQzXdKjjHvdv-vx9HVYBnwzM-nsrS4Frcs8oS79dwWIqU_IWyd7fzSG_CGIM5e5VijVHN5yK8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50"></div>
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 max-w-full bg-transparent backdrop-blur-xl">
+<div class="text-2xl font-bold tracking-[-0.02em] text-[#ca98ff] font-['Manrope']">
+            Ether Lullaby
+        </div>
+<div class="flex gap-4">
+<button class="material-symbols-outlined text-[#ca98ff] hover:text-[#00fbfb] transition-colors duration-300">sports_esports</button>
+<button class="material-symbols-outlined text-[#ca98ff] hover:text-[#00fbfb] transition-colors duration-300">account_circle</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 pt-24 pb-32">
+<!-- Header Section -->
+<div class="text-center mb-16 max-w-2xl">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-secondary mb-4 block">Select Your Reality</span>
+<h1 class="font-serif text-5xl md:text-7xl italic font-light text-on-background tracking-tight mb-2">
+                Cosmic Games
+            </h1>
+<div class="star-trail opacity-30 mx-auto w-24"></div>
+</div>
+<!-- Bento Grid Game Selection -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-5xl">
+<!-- Game Card 1: Hormiga Runner -->
+<div class="group relative glass-panel rounded-[40px] overflow-hidden glow-cyan transition-all duration-700 hover:scale-[1.03] hover:shadow-[0_0_80px_-15px_rgba(0,251,251,0.25)]">
+<div class="cosmic-gradient-cyan absolute inset-0 opacity-40"></div>
+<div class="relative h-full flex flex-col">
+<!-- Preview Area -->
+<div class="h-72 relative overflow-hidden m-2 rounded-[32px]">
+<img class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-1000" data-alt="Retro 16-bit pixel art of a tiny ant running across a desolate violet lunar surface with craters and distant stars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBktv3nO13yTsYXeZeW3XNY26PwEfHwAxYvvvNWba5P6YasNwxnBA7NOZc4U7mydtcQ2DfkQAvk_ZhJ0NJXAcVLZcOS2yQdxqp-sH-1rTOhh0FcyUa02HhUvQhhUX5-Afdih7SBERL47jyETf3rSXrbB2WFhk99vQKVymk8DvObKlMCrcvfv8vHQ9SrYDdja0g1Y0MpwYxVShF4tbygM2mg_M6Pj-VxDZRewyw1mL34nSS1zkTOEStKDzRrWZGcNniopdijRXVvCNE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0e0e14] via-transparent to-transparent opacity-60"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="pixel-font text-secondary text-xs tracking-tighter group-hover:tracking-normal transition-all duration-500">HORMIGA_RUNNER_v1.0</span>
+</div>
+</div>
+<!-- Content Area -->
+<div class="p-10 pt-4 text-center">
+<div class="flex justify-center gap-2 mb-6">
+<div class="w-1 h-1 rounded-full bg-secondary animate-pulse"></div>
+<span class="font-label text-[8px] uppercase tracking-[0.3em] text-secondary/60">Orbital Sector 7</span>
+</div>
+<h3 class="font-headline text-4xl font-bold text-on-background mb-4 group-hover:text-secondary transition-colors tracking-tight">Hormiga Runner</h3>
+<p class="pixel-font text-[9px] leading-loose text-on-surface-variant mb-8 px-4 opacity-70">
+                            NAVIGATE THE CELESTIAL VOID. DODGE ASTEROIDS. SURVIVE THE ETERNAL NIGHT.
+                        </p>
+<button class="w-full py-4 bg-secondary/10 border border-secondary/30 rounded-full font-label text-[10px] uppercase tracking-widest text-secondary font-bold hover:bg-secondary hover:text-on-primary-fixed transition-all duration-500">
+                            Launch Mission
+                        </button>
+</div>
+</div>
+</div>
+<!-- Game Card 2: Jirafa Memorama -->
+<div class="group relative glass-panel rounded-[40px] overflow-hidden glow-magenta transition-all duration-700 hover:scale-[1.03] hover:shadow-[0_0_80px_-15px_rgba(255,81,250,0.25)]">
+<div class="cosmic-gradient-magenta absolute inset-0 opacity-40"></div>
+<div class="relative h-full flex flex-col">
+<!-- Preview Area -->
+<div class="h-72 relative overflow-hidden m-2 rounded-[32px]">
+<img class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105 transition-all duration-1000" data-alt="Stylized pixel art of a long-necked giraffe wearing cybernetic glasses against a backdrop of swirling magenta nebula clouds" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFdbUZ_ySsjdIY55XLZuYnlSy44_CCJKwVcOuSkaucej__Jvl7yQp4f7s5gHCy7U3swEA4MWNEU8jseQTVE067H_M2SYxCIY8Bobx2MOW4lCI5_R2igd1284ByGRbUqhLYjwkSC0sKSa2WAmJSxhXh2PfgidVtsPqHb4Og6RN0nOAk9EpuxpK1JE-01H9inPwYF9f1NJLR7ORa82Yh_8NP3lZkxid_r5DEF4WP3bRKBKY7JA9aoUhPPYSdRE27M6FlD2rWrl60ogw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0e0e14] via-transparent to-transparent opacity-60"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="pixel-font text-tertiary text-xs tracking-tighter group-hover:tracking-normal transition-all duration-500">JIRAFA_MEMO_v2.4</span>
+</div>
+</div>
+<!-- Content Area -->
+<div class="p-10 pt-4 text-center">
+<div class="flex justify-center gap-2 mb-6">
+<div class="w-1 h-1 rounded-full bg-tertiary animate-pulse"></div>
+<span class="font-label text-[8px] uppercase tracking-[0.3em] text-tertiary/60">Nebula Node Active</span>
+</div>
+<h3 class="font-headline text-4xl font-bold text-on-background mb-4 group-hover:text-tertiary transition-colors tracking-tight">Jirafa Memorama</h3>
+<p class="pixel-font text-[9px] leading-loose text-on-surface-variant mb-8 px-4 opacity-70">
+                            CHALLENGE THE KEEPER OF SECRETS. RECALL THE CONSTELLATIONS. UNLOCK WISDOM.
+                        </p>
+<button class="w-full py-4 bg-tertiary/10 border border-tertiary/30 rounded-full font-label text-[10px] uppercase tracking-widest text-tertiary font-bold hover:bg-tertiary hover:text-white transition-all duration-500">
+                            Start Neural Link
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Decorative Quote -->
+<div class="mt-20 opacity-40 hover:opacity-100 transition-opacity duration-700">
+<p class="font-serif italic text-lg text-center text-on-surface-variant">
+                "In the silence of the stars, we find our play."
+            </p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-center items-center px-4 pb-8 pt-2">
+<!-- Universe (Active & Focused) -->
+<a class="flex items-center gap-3 bg-[#ca98ff]/10 text-[#ca98ff] border border-[#ca98ff]/20 rounded-full px-8 py-3 backdrop-blur-3xl transition-all hover:bg-[#ca98ff]/20" href="#">
+<span class="material-symbols-outlined">rocket_launch</span>
+<span class="font-['Be_Vietnam_Pro'] text-[12px] font-bold uppercase tracking-[0.2em]">Universe</span>
+</a>
+</nav>
+</body></html>

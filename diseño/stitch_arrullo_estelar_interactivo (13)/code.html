@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "primary": "#8A2BE2",
+                "on-surface": "#e6e3f5",
+                "surface-dim": "#0d0d19",
+              },
+              "borderRadius": {
+                "DEFAULT": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "0.5rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "headline": ["Playfair Display", "serif"],
+                "body": ["Manrope", "sans-serif"],
+                "serif-fancy": ["Playfair Display", "serif"],
+                "pixel": ["'Press Start 2P'", "cursive"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0d19;
+            color: #e6e3f5;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .pixel-scanline {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .ethereal-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(138, 43, 226, 0.2);
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
+        }
+    
+        @keyframes messageFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .romantic-message {
+            font-family: 'Press Start 2P', cursive;
+            animation: messageFade 4s ease-in-out forwards;
+            text-shadow: 2px 2px #000;
+        }
+
+        /* Environmental Animations */
+        @keyframes fireflyPulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8) translateY(0); }
+            50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
+        }
+        .firefly {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #f0ff9e;
+            box-shadow: 0 0 10px #f0ff9e;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        @keyframes cloudDrift {
+            from { transform: translateX(110vw); }
+            to { transform: translateX(-20vw); }
+        }
+        .cloud {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.4;
+            image-rendering: pixelated;
+        }
+
+        @keyframes fogSway {
+            0%, 100% { transform: translateX(-5%); }
+            50% { transform: translateX(5%); }
+        }
+        .mist-layer {
+            position: absolute;
+            bottom: 0;
+            left: -10%;
+            width: 120%;
+            height: 40%;
+            background: linear-gradient(transparent, rgba(200, 200, 220, 0.15));
+            filter: blur(40px);
+            pointer-events: none;
+            animation: fogSway 20s ease-in-out infinite;
+        }
+
+        .scene {
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary/30 selection:text-white m-0 p-0 overflow-hidden w-screen h-screen">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0 overflow-hidden" id="bg-container">
+<!-- Main Fullscreen Background -->
+<div class="scene absolute inset-0 opacity-100 transition-opacity duration-1000" id="scene-main">
+<img alt="Couple in a boat on a serene lake" class="w-full h-full object-cover block" src="https://lh3.googleusercontent.com/aida/ADBb0ugCPUsYpO-ufdYcQp7WAZ1gUg9mSdVY_BZjHodiCdu29-WqWLbjqX2SFLNedXaHcwnoB7YdcjqMCSl3m8bAssZX0_l7j-d_hjb-b2jBdbq0ijblwvSdKbf3LPefht5Oz4POa5wPZRgqG5_MIR2eK57plp4S4He4JdFWuLndvDHKLisknFi0JjqI_XFqyMTSZsVNNiC_rRRaKMgwWT4EwzeuuPDhQFkry2cg_Dz-UHhmawIT50t81fy0PX94iIVHFLFYAHtrwwjE"/>
+</div>
+<!-- Forest Path Scene (Updated) -->
+<div class="scene absolute inset-0 opacity-0 transition-opacity duration-1000" id="scene-forest">
+<img alt="Pixel art forest path sunset" class="w-full h-full object-cover block" src="https://lh3.googleusercontent.com/aida/ADBb0ugcqi930XicrJMCoxIvPl2EYSDHE_TlIkBgG0KbkAuMqvijkcjpCh-B4hqMkOsH_g3TPPRM3TRtePT3IkziPXwUfm1RvbysumT2rWv-YQLz_F9AgP9X5toKw2XreVpQl_5uR1mNFoVyFjSMQ9t0tYyCdBMlra7uS2YFpbgQNXucLjHAXfSgtWLFKVqQNjHMVkCYvWVqtPSTCtwGtcEVdWUQL66FUFiQTgsphybIOXCGcfbqxrjB_izpjFxDf_HbUJLSyamnbRzhkw"/>
+<!-- Overlay for environmental animations -->
+<div class="absolute inset-0 overflow-hidden" id="forest-animations">
+<div class="mist-layer"></div>
+</div>
+</div>
+<!-- Scanline Overlay -->
+<div class="absolute inset-0 pixel-scanline z-10 opacity-10"></div>
+</div>
+<!-- UI Layer -->
+<div class="relative z-20 min-h-screen flex flex-col pointer-events-none">
+<!-- Main Content Area: Centered Lyrics -->
+<main class="flex-grow flex items-center justify-center pointer-events-auto">
+<section class="text-center px-6 max-w-4xl">
+<div id="lyrics-content">
+<p class="font-serif-fancy italic text-4xl md:text-6xl text-white ethereal-glow leading-relaxed tracking-wide" id="main-lyrics">
+                    En el faro de tu amor...
+                </p>
+</div>
+</section>
+<!-- Right-Side Vertical Icon Menu -->
+<aside class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-12 items-center">
+<button class="group transition-all duration-300 pointer-events-auto" onclick="showRomanticMessage()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">favorite</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">sports_esports</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto" onclick="toggleToForest()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl" id="landscape-btn-icon">landscape</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">music_note</span>
+</button>
+</aside>
+</main>
+<!-- Footer Area -->
+<footer class="h-32 flex flex-col items-center justify-center relative px-8 pointer-events-none">
+<!-- Message Container -->
+<div class="absolute top-0 w-full flex justify-center h-12 overflow-visible" id="romantic-message-container"></div>
+<!-- Subtle Info -->
+<div class="mt-auto pb-8 w-full flex justify-between items-center opacity-40 pointer-events-auto">
+<div class="text-[10px] uppercase tracking-[0.4em] text-white font-body" id="status-label">
+                Ether Lullaby // Audio_Stream_Active
+            </div>
+<div class="text-[8px] uppercase tracking-widest text-white font-pixel">
+                Sync Status: Stable
+            </div>
+</div>
+</footer>
+</div>
+<script>
+    const messages = [
+        'Eres mi universo',
+        'Tu amor es mi guía',
+        'Siempre juntos',
+        'Bajo las mismas estrellas',
+        'Mi corazón es tuyo',
+        'Contigo el tiempo se detiene',
+        'Eternamente en tus ojos'
+    ];
+    const colors = ['#FFDAB9', '#FFB7C5', '#FFD700', '#00FFFF', '#FF00FF']; 
+    let isForest = false;
+    let fireflyInterval;
+    let cloudInterval;
+
+    function showRomanticMessage() {
+        const container = document.getElementById('romantic-message-container');
+        container.innerHTML = '';
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        const color = colors[Math.floor(Math.random() * 3)]; 
+        const msgElement = document.createElement('p');
+        msgElement.className = 'romantic-message text-xs md:text-sm tracking-tighter text-center max-w-sm';
+        msgElement.style.color = color;
+        msgElement.innerText = msg;
+        container.appendChild(msgElement);
+    }
+
+    function spawnFirefly() {
+        if (!isForest) return;
+        const container = document.getElementById('forest-animations');
+        const firefly = document.createElement('div');
+        firefly.className = 'firefly';
+        
+        firefly.style.left = Math.random() * 100 + '%';
+        firefly.style.top = (Math.random() * 60 + 30) + '%';
+        firefly.style.animation = `fireflyPulse ${2 + Math.random() * 3}s infinite ease-in-out`;
+        firefly.style.animationDelay = Math.random() * 5 + 's';
+        
+        container.appendChild(firefly);
+        setTimeout(() => firefly.remove(), 8000);
+    }
+
+    function spawnCloud() {
+        if (!isForest) return;
+        const container = document.getElementById('forest-animations');
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        
+        // Simple SVG for a pixelated cloud look
+        cloud.innerHTML = `<svg width="100" height="40" viewBox="0 0 100 40" fill="white">
+            <rect x="20" y="10" width="60" height="20" />
+            <rect x="30" y="0" width="40" height="10" />
+            <rect x="10" y="20" width="80" height="10" />
+        </svg>`;
+        
+        cloud.style.top = (Math.random() * 30 + 5) + '%';
+        cloud.style.animation = `cloudDrift ${60 + Math.random() * 40}s linear forwards`;
+        
+        container.appendChild(cloud);
+        setTimeout(() => cloud.remove(), 105000);
+    }
+
+    function toggleToForest() {
+        const mainScene = document.getElementById('scene-main');
+        const forestScene = document.getElementById('scene-forest');
+        const lyrics = document.getElementById('main-lyrics');
+        const status = document.getElementById('status-label');
+        const icon = document.getElementById('landscape-btn-icon');
+        
+        if (!isForest) {
+            mainScene.classList.replace('opacity-100', 'opacity-0');
+            forestScene.classList.replace('opacity-0', 'opacity-100');
+            isForest = true;
+            icon.innerText = 'nights_stay';
+            
+            // Start forest animations
+            fireflyInterval = setInterval(spawnFirefly, 400);
+            cloudInterval = setInterval(spawnCloud, 15000);
+            
+            // Initial batch
+            for(let i=0; i<15; i++) setTimeout(spawnFirefly, i * 200);
+            spawnCloud();
+            
+            lyrics.innerText = "Caminando hacia el ocaso...";
+            status.innerText = "Sunset Forest // Sync_Harmonic";
+        } else {
+            mainScene.classList.replace('opacity-0', 'opacity-100');
+            forestScene.classList.replace('opacity-100', 'opacity-0');
+            isForest = false;
+            icon.innerText = 'landscape';
+            
+            clearInterval(fireflyInterval);
+            clearInterval(cloudInterval);
+            // Clear animations but keep mist which is static CSS
+            const animContainer = document.getElementById('forest-animations');
+            Array.from(animContainer.children).forEach(child => {
+                if(!child.classList.contains('mist-layer')) child.remove();
+            });
+            
+            lyrics.innerText = "En el faro de tu amor...";
+            status.innerText = "Ether Lullaby // Audio_Stream_Active";
+        }
+    }
+</script>
+</body></html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Animal Search - Celestial Echo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Be+Vietnam+Pro:wght@100;300;400;700&amp;family=VT323&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#006a6a",
+                        "on-surface": "#f0ecf6",
+                        "primary-fixed-dim": "#b772ff",
+                        "tertiary-fixed-dim": "#ff61f8",
+                        "outline": "#76747c",
+                        "on-secondary-container": "#d9fffe",
+                        "tertiary-fixed": "#ff81f5",
+                        "secondary-fixed": "#00fbfb",
+                        "on-primary-fixed-variant": "#420078",
+                        "tertiary-container": "#fe00fe",
+                        "background": "#0e0e14",
+                        "surface-bright": "#2c2b35",
+                        "error-container": "#a70138",
+                        "on-secondary": "#005c5c",
+                        "primary": "#ca98ff",
+                        "surface-variant": "#25252e",
+                        "on-primary": "#46007d",
+                        "surface-dim": "#0e0e14",
+                        "on-tertiary": "#400040",
+                        "inverse-primary": "#8523dd",
+                        "outline-variant": "#48474e",
+                        "primary-fixed": "#c185ff",
+                        "secondary-fixed-dim": "#00ecec",
+                        "primary-container": "#c185ff",
+                        "surface-container-lowest": "#000000",
+                        "on-secondary-fixed-variant": "#006666",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary-fixed": "#004747",
+                        "on-tertiary-fixed-variant": "#6a006a",
+                        "tertiary": "#ff51fa",
+                        "on-error-container": "#ffb2b9",
+                        "surface-container-low": "#131319",
+                        "error-dim": "#d73357",
+                        "secondary-dim": "#00ecec",
+                        "on-tertiary-container": "#230023",
+                        "surface-container-highest": "#25252e",
+                        "on-tertiary-fixed": "#320032",
+                        "on-error": "#490013",
+                        "inverse-surface": "#fcf8ff",
+                        "surface": "#0e0e14",
+                        "surface-container-high": "#1f1f27",
+                        "on-surface-variant": "#acaab2",
+                        "tertiary-dim": "#ff51fa",
+                        "on-primary-container": "#350062",
+                        "inverse-on-surface": "#55545c",
+                        "on-background": "#f0ecf6",
+                        "primary-dim": "#9c42f4",
+                        "secondary": "#00fbfb",
+                        "surface-tint": "#ca98ff",
+                        "surface-container": "#191920",
+                        "error": "#ff6e84"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "display": ["Manrope"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Be Vietnam Pro"],
+                        "pixel": ["VT323"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pixel-grid-cell {
+            aspect-ratio: 1 / 1;
+        }
+        .celestial-glow {
+            box-shadow: 0 0 40px rgba(0, 251, 251, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen overflow-x-hidden selection:bg-primary/30">
+<!-- Top Navigation Shell -->
+<header class="w-full top-0 px-6 py-4 bg-gradient-to-b from-[#191920] to-transparent flex justify-between items-center z-50 fixed">
+<div class="flex flex-col">
+<h1 class="text-xl font-bold tracking-tighter text-[#00fbfb] drop-shadow-[0_0_10px_rgba(0,251,251,0.4)] font-headline uppercase">
+                Animal Search
+            </h1>
+<span class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-label">Celestial Edition</span>
+</div>
+<!-- Timer Display -->
+<div class="flex items-center gap-4 bg-surface-container/40 backdrop-blur-md px-6 py-2 rounded-full border border-outline-variant/20 shadow-[0_0_20px_rgba(202,152,255,0.15)]">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="schedule">schedule</span>
+<span class="font-pixel text-3xl text-secondary tracking-widest drop-shadow-[0_0_8px_rgba(0,251,251,0.6)]">01:30</span>
+</div>
+<button class="text-[#ca98ff] hover:text-[#00fbfb] transition-colors duration-300 active:scale-95">
+<span class="material-symbols-outlined text-3xl" data-icon="close">close</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Word List / Sidebar Left -->
+<aside class="lg:col-span-3 order-2 lg:order-1">
+<div class="bg-surface-container/30 backdrop-blur-xl p-6 rounded-3xl border border-outline-variant/10">
+<h3 class="font-headline font-extrabold text-primary text-lg tracking-tight mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="travel_explore">travel_explore</span>
+                    HIDDEN ENTITIES
+                </h3>
+<ul class="space-y-4">
+<li class="flex items-center gap-3 group">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#00fbfb]"></div>
+<span class="font-label text-sm tracking-widest text-on-surface group-hover:text-secondary transition-colors uppercase">Girafa</span>
+</li>
+<li class="flex items-center gap-3 opacity-40">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-label text-sm tracking-widest text-on-surface line-through uppercase">Leon</span>
+</li>
+<li class="flex items-center gap-3 group">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="font-label text-sm tracking-widest text-on-surface-variant group-hover:text-primary transition-colors uppercase">Elefante</span>
+</li>
+<li class="flex items-center gap-3 group">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="font-label text-sm tracking-widest text-on-surface-variant group-hover:text-primary transition-colors uppercase">Tigre</span>
+</li>
+<li class="flex items-center gap-3 group">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="font-label text-sm tracking-widest text-on-surface-variant group-hover:text-primary transition-colors uppercase">Hormiga</span>
+</li>
+</ul>
+<div class="mt-12 p-4 bg-primary/10 rounded-2xl border border-primary/20">
+<p class="text-[10px] text-primary-fixed leading-relaxed font-label uppercase tracking-wider">
+                        Find all species to synchronize the celestial alignment.
+                    </p>
+</div>
+</div>
+</aside>
+<!-- Central Grid Element -->
+<section class="lg:col-span-6 order-1 lg:order-2 flex flex-col items-center">
+<div class="relative w-full max-w-lg">
+<!-- Background Decorative Glows -->
+<div class="absolute -top-20 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-[100px]"></div>
+<div class="absolute -bottom-20 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-[100px]"></div>
+<div class="bg-surface-container-low/40 backdrop-blur-2xl p-4 md:p-8 rounded-[40px] border border-outline-variant/20 shadow-2xl relative overflow-hidden">
+<!-- Glass Grid -->
+<div class="grid grid-cols-12 gap-1 md:gap-2">
+<!-- Row 1 (GIRAFA vertical starts at col 2) -->
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5 transition-colors">X</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-secondary drop-shadow-[0_0_10px_#00fbfb] bg-secondary/10 rounded-md cursor-pointer">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">Q</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">W</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">R</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">T</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">Y</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">U</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">I</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">O</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">P</div>
+<!-- Row 2 -->
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-secondary drop-shadow-[0_0_10px_#00fbfb] bg-secondary/10 cursor-pointer">I</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">S</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">D</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">F</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">H</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">J</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">K</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">L</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">Z</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">X</div>
+<!-- Row 3 (LEON horizontal) -->
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-tertiary drop-shadow-[0_0_10px_#ff51fa] bg-tertiary/20 cursor-pointer">L</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-secondary drop-shadow-[0_0_10px_#00fbfb] bg-secondary/10 cursor-pointer">R</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-tertiary drop-shadow-[0_0_10px_#ff51fa] bg-tertiary/20 cursor-pointer">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-tertiary drop-shadow-[0_0_10px_#ff51fa] bg-tertiary/20 cursor-pointer">O</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-tertiary drop-shadow-[0_0_10px_#ff51fa] bg-tertiary/20 cursor-pointer">N</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">B</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">N</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">M</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">Q</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">W</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant cursor-pointer hover:bg-white/5">R</div>
+<!-- Row 4 -->
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">C</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-secondary drop-shadow-[0_0_10px_#00fbfb] bg-secondary/10">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">V</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">B</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">N</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">M</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">S</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">D</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">F</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">H</div>
+<!-- Row 5 (ELEFANTE vertical) -->
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">K</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-secondary drop-shadow-[0_0_10px_#00fbfb] bg-secondary/10">F</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">L</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">O</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">P</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">U</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Y</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">T</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">R</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">W</div>
+<!-- Remaining 7 rows (Represented briefly) -->
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Q</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-secondary drop-shadow-[0_0_10px_#00fbfb] bg-secondary/10">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">L</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">S</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">D</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">F</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">H</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">J</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">K</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">L</div>
+<!-- Rows 7-12 compressed for visual representation -->
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Z</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">X</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">C</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">V</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">B</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">T</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">I</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">R</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Q</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">W</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">F</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">R</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">T</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Y</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">U</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">I</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">O</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">P</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">S</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">D</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">F</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">H</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">O</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">R</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">M</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">I</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">K</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">L</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Z</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">N</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">X</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">C</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">V</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">B</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">N</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">M</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Q</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">W</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">R</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">T</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">T</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Y</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">U</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">I</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">O</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">P</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">A</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">S</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">D</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">F</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">G</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">H</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-primary font-bold">E</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">J</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">K</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">L</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">Z</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">X</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">C</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">V</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">B</div>
+<div class="pixel-grid-cell flex items-center justify-center font-pixel text-xl md:text-2xl text-on-surface-variant">N</div>
+</div>
+</div>
+</div>
+<!-- Interaction Buttons -->
+<div class="flex gap-4 mt-12">
+<button class="px-8 py-3 bg-gradient-to-r from-primary-dim to-primary rounded-full text-on-primary font-headline font-bold text-sm tracking-widest shadow-[0_10px_20px_rgba(202,152,255,0.3)] active:scale-95 transition-all">
+                    SOLVE SELECTION
+                </button>
+<button class="px-8 py-3 bg-surface-variant/30 backdrop-blur-md rounded-full text-secondary font-headline font-bold text-sm tracking-widest border border-secondary/20 hover:bg-secondary/10 transition-all">
+                    SHUFFLE GRID
+                </button>
+</div>
+</section>
+<!-- Help Mechanic / Hint Ant Right -->
+<aside class="lg:col-span-3 order-3 flex flex-col items-center lg:items-end">
+<div class="group relative cursor-pointer active:scale-90 transition-transform">
+<!-- Hint Ant Pixel-Style Avatar -->
+<div class="w-24 h-24 relative mb-4">
+<img alt="a detailed pixel art ant wearing a tiny glowing celestial monocle, vibrant purple and cyan highlights on its exoskeleton" class="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,81,250,0.5)]" data-alt="a detailed pixel art ant wearing a tiny glowing celestial monocle, vibrant purple and cyan highlights on its exoskeleton" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuSdwA21H4Kf4mIHXzTO2CoSIloxF88XgBZJHIIySeI5YJP2ij0dq1mHH8HRVHR0xA1j6rBq9KAP2Dqz1ZxYwMamGC_iD4zZHKjWvDGmX4zGFBoYBWfC_OfIf0N5cNQZ-kI6b6emHt4K-yX1v_l8ngTjUxx2pV5Pm-5W--kmAlO48a_bVxhasJfXC0Cb2v4Fv3WqtWB2p2iAcwc1fNwHLNCiWAdpVnTwqwqnA7rPbSUD7zWgCZ1AH9kErL45L9tKnVZeZ37KYfVJA"/>
+<div class="absolute -top-2 -right-2 bg-tertiary text-on-tertiary text-[10px] font-black px-2 py-1 rounded-full shadow-lg">HINT</div>
+</div>
+<div class="bg-surface-container-high/60 backdrop-blur-md p-4 rounded-2xl border border-tertiary/20 max-w-[200px] text-right">
+<p class="font-label text-[11px] text-on-surface tracking-wide leading-relaxed">
+                        "Need a scent? Click me to reveal a hidden star-trail."
+                    </p>
+</div>
+<!-- Floating particles effect simulated with absolute divs -->
+<div class="absolute -z-10 w-full h-full top-0 left-0">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-tertiary/5 blur-2xl rounded-full group-hover:bg-tertiary/20 transition-all"></div>
+</div>
+</div>
+<div class="mt-20 w-full bg-surface-container/20 p-6 rounded-3xl border border-outline-variant/10">
+<div class="flex justify-between items-end mb-4">
+<span class="text-[10px] font-label tracking-[0.2em] text-on-surface-variant uppercase">Player Rank</span>
+<span class="text-secondary font-headline font-black text-xl italic tracking-tighter uppercase">Novice Explorer</span>
+</div>
+<div class="h-[2px] w-full bg-surface-variant overflow-hidden rounded-full">
+<div class="h-full w-[45%] bg-gradient-to-r from-secondary to-primary shadow-[0_0_10px_#00fbfb]"></div>
+</div>
+<p class="mt-4 text-[10px] text-on-surface-variant font-label text-center uppercase tracking-widest">
+                    Exp: 450 / 1000
+                </p>
+</div>
+</aside>
+</main>
+<!-- Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#0e0e14]/80 backdrop-blur-xl border-t border-[#f0ecf6]/10 shadow-[0_-10px_40px_rgba(0,251,251,0.1)] rounded-t-[32px]">
+<div class="flex flex-col items-center justify-center bg-[#ca98ff]/20 text-[#00fbfb] rounded-full p-3 shadow-[0_0_15px_rgba(202,152,255,0.3)] group cursor-pointer transition-all duration-300">
+<span class="material-symbols-outlined text-2xl" data-icon="videogame_asset">videogame_asset</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest mt-1">Play</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f0ecf6]/40 p-3 hover:text-[#ff51fa] transition-all duration-300 cursor-pointer group">
+<span class="material-symbols-outlined text-2xl" data-icon="leaderboard">leaderboard</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest mt-1">Stats</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f0ecf6]/40 p-3 hover:text-[#ff51fa] transition-all duration-300 cursor-pointer group">
+<span class="material-symbols-outlined text-2xl" data-icon="pets">pets</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest mt-1">Animals</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#f0ecf6]/40 p-3 hover:text-[#ff51fa] transition-all duration-300 cursor-pointer group">
+<span class="material-symbols-outlined text-2xl" data-icon="settings">settings</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest mt-1">Settings</span>
+</div>
+</nav>
+</body></html>

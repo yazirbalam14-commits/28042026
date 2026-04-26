@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "primary": "#8A2BE2",
+                "on-surface": "#e6e3f5",
+                "surface-dim": "#0d0d19",
+              },
+              "borderRadius": {
+                "DEFAULT": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "0.5rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "headline": ["Playfair Display", "serif"],
+                "body": ["Manrope", "sans-serif"],
+                "serif-fancy": ["Playfair Display", "serif"],
+                "pixel": ["'Press Start 2P'", "cursive"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0d19;
+            color: #e6e3f5;
+            overflow: hidden;
+        }
+        .pixel-scanline {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .dither-pattern {
+            background-image: radial-gradient(#181827 1px, transparent 0);
+            background-size: 4px 4px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .ethereal-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(138, 43, 226, 0.2);
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
+        }
+    
+        @keyframes messageFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .romantic-message {
+            font-family: 'Press Start 2P', cursive;
+            animation: messageFade 4s ease-in-out forwards;
+            text-shadow: 2px 2px #000;
+        }
+
+        .pixel-bg {
+            image-rendering: pixelated;
+            image-rendering: -moz-pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        @keyframes firefly {
+            0%, 100% { opacity: 0; transform: translate(0, 0) scale(1); }
+            50% { opacity: 0.8; transform: translate(10px, -20px) scale(1.2); }
+        }
+        .firefly {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #d4ff00;
+            box-shadow: 0 0 5px #d4ff00;
+            border-radius: 1px;
+            pointer-events: none;
+        }
+
+        @keyframes fishJump {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translateY(-40px) rotate(180deg); }
+            80% { opacity: 1; }
+            100% { transform: translateY(10px) rotate(360deg); opacity: 0; }
+        }
+        .pixel-fish {
+            position: absolute;
+            width: 8px;
+            height: 4px;
+            background: #4a5568;
+            clip-path: polygon(0% 50%, 40% 0%, 100% 50%, 40% 100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            0% { transform: scale(0.5); opacity: 0.8; border-width: 2px; }
+            100% { transform: scale(3); opacity: 0; border-width: 1px; }
+        }
+        .ripple {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .scene {
+            transition: opacity 1s ease-in-out;
+        }
+
+        .pixel-border {
+            border: 4px solid #8A2BE2;
+            box-shadow: 
+                0 0 0 4px #0d0d19,
+                inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Memory Book Styles */
+        .book-overlay {
+            background-color: rgba(13, 13, 25, 0.95);
+            backdrop-filter: blur(12px);
+        }
+        .book-container {
+            perspective: 2000px;
+        }
+        .book-page {
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-style: preserve-3d;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+        }
+        .page-content {
+            backface-visibility: hidden;
+            background: #1a1a2e;
+            border: 4px solid #8A2BE2;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.7);
+        }
+        .page-turned {
+            transform: rotateY(-180deg);
+        }
+        .pixel-photo-frame {
+            border: 6px solid #e6e3f5;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.4);
+        }
+        .text-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .text-scroll::-webkit-scrollbar-track {
+            background: rgba(138, 43, 226, 0.1);
+        }
+        .text-scroll::-webkit-scrollbar-thumb {
+            background: #8A2BE2;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary/30 selection:text-white">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-[#0d0d19]"></div>
+<div class="scene absolute inset-0 opacity-100" id="scene-nebula">
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-[800px] h-[600px] bg-gradient-to-tr from-primary/20 via-purple-500/10 to-cyan-500/20 blur-[120px] opacity-40"></div>
+</div>
+<div class="absolute top-20 right-32 w-48 h-48 bg-cyan-400/10 rounded-full border-4 border-cyan-400/20 flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 dither-pattern opacity-50"></div>
+<div class="w-full h-full bg-gradient-to-br from-cyan-400 to-transparent opacity-20"></div>
+</div>
+<img alt="Pixel art style silhouette of a couple" class="pixel-bg w-full h-full object-cover mix-blend-screen opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYvUi64jLIS1E5G1fdeMV10DJsCU4yzyhErV4b9OXL-ISzQoR8zPjfBFrz02AIrc-1fp7_GvAn_-WG7Ik7w2qg3POm5naTEDrsw8aP9N_eEz6GFz6c8KnlahwPdFtWbWsgua2AAv3q-cxTGd-tXce4aj3CEii5sAyRWOjJc4Xn9kpsM7bWieJT2rgYYVj-9rje3N4P-y2hwRw8cyg4J2R3e_5omgtoJn1DI-fbQNoI7JFvFUrmoRK2gCztEK6LHUk1gL9RcKDuYTU"/>
+</div>
+<div class="scene absolute inset-0 opacity-0 pointer-events-none" id="scene-lake">
+<img alt="16-bit pixel art version of a couple in a boat on a serene lake" class="pixel-bg w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida/ADBb0uiyt0O2I_dQATF3ci-ougT8xOQGwGv4Jl3q_tl7JQPVFEyMYmWRxuTxPqDamOVzz_oEOvZ3zjI-VzBn2hnBjsRJsHi9K-ixiJ-Tq1t3aZXsU-YNHKx_c4LO3w42zjyTj0bIJf4hNsD6p_EjHMMQH_nR5TtoI4LS0Z_DKcpSKojFLFWa-3PsNEDobRbDBPu6hP79Tl4a1xNd45Tp9ujlghK2VAyJdRmcunsoxDakjVAyYApflHywfLsPOKSCNdQq5Teg5YHMVj1qBw"/>
+<div class="absolute inset-0" id="lake-elements"></div>
+</div>
+<div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[-5%] left-[10%] w-[2px] h-24 bg-cyan-400 opacity-60 rotate-[25deg]"></div>
+<div class="absolute top-[10%] left-[25%] w-[2px] h-32 bg-fuchsia-500 opacity-50 rotate-[25deg]"></div>
+<div class="absolute top-[0%] left-[40%] w-[2px] h-20 bg-primary opacity-60 rotate-[25deg]"></div>
+<div class="absolute top-[15%] left-[55%] w-[2px] h-40 bg-cyan-300 opacity-40 rotate-[25deg]"></div>
+</div>
+<div class="absolute inset-0 pixel-scanline z-10 opacity-30"></div>
+</div>
+<!-- UI Layer -->
+<div class="relative z-20 min-h-screen flex flex-col">
+<main class="flex-grow flex items-center justify-center">
+<section class="text-center px-6 max-w-4xl">
+<div id="lyrics-content">
+<p class="font-serif-fancy italic text-4xl md:text-6xl text-white ethereal-glow leading-relaxed tracking-wide">
+                    En el faro de tu amor...
+                </p>
+</div>
+</section>
+<aside class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-12 items-center">
+<button class="group transition-all duration-300" onclick="showRomanticMessage()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">favorite</span>
+</button>
+<button class="group transition-all duration-300">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">sports_esports</span>
+</button>
+<button class="group transition-all duration-300" onclick="toggleLakeScene()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">landscape</span>
+</button>
+<button class="group transition-all duration-300" id="book-trigger" onclick="toggleMemoryBook()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">menu_book</span>
+</button>
+</aside>
+</main>
+<footer class="h-32 flex flex-col items-center justify-center relative px-8">
+<div class="absolute top-0 w-full flex justify-center h-12 overflow-visible" id="romantic-message-container"></div>
+<div class="mt-auto pb-8 w-full flex justify-between items-center opacity-40">
+<div class="text-[10px] uppercase tracking-[0.4em] text-white font-body">Ether Lullaby // Memory_Sync_Active</div>
+<div class="text-[8px] uppercase tracking-widest text-white font-pixel">Sync Status: Stable</div>
+</div>
+</footer>
+</div>
+<!-- Memory Book Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center book-overlay opacity-0 pointer-events-none transition-opacity duration-500" id="memory-book-overlay">
+<button class="absolute top-8 right-8 z-[70] group transition-all duration-300" onclick="toggleMemoryBook()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white text-4xl">close</span>
+</button>
+<div class="book-container w-[90%] max-w-5xl h-[70vh] relative">
+<div class="w-full h-full relative" id="book-viewport">
+<!-- Page 1: First Image {{DATA:IMAGE:IMAGE_10}} -->
+<div class="book-page z-40" id="page-1">
+<div class="page-content w-full h-full absolute inset-0 flex flex-col md:flex-row p-6 md:p-12 gap-8 items-center bg-[#1a1a2e]">
+<div class="w-full md:w-3/5 h-full flex items-center justify-center">
+<div class="pixel-photo-frame w-full max-w-sm aspect-[9/16] overflow-hidden">
+<img alt="Memory 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uj-EFptSQJjrzettPMFEixsx5PD_55eztreZpc6NIvRS_NU9ASfiRQehzgSuxMMiToOXH0FkhTVRAZCzmewQW59nAMM4IFyPFXNvtgmi6ZZw8VP9ey3jpGoO2jr7ZG2fkyyVkuPmEWI5fU3zjEa4EasBKkjOL-RiyJGwhHlxo5m8xGD3SeP6vk4da5TauNh9gdMmSY2NfTXSlYM0587MZdDHE0P__v6P0ipM2jKOEdQFYxe51ILtsoiJc2L-rhGQX9o8bMfT05t9g"/>
+</div>
+</div>
+<div class="w-full md:w-2/5 flex flex-col justify-center">
+<h2 class="font-headline text-3xl md:text-5xl text-white mb-4">Primer Encuentro</h2>
+<div class="w-16 h-1 bg-primary mb-6"></div>
+<p class="font-body text-white/80 leading-relaxed text-lg">
+                            Cada píxel de este momento quedó grabado en mi memoria. La luz de ese día tenía un brillo especial que solo tú podías traer.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Page 2: Second Image {{DATA:IMAGE:IMAGE_11}} -->
+<div class="book-page z-30" id="page-2">
+<div class="page-content w-full h-full absolute inset-0 flex flex-col md:flex-row p-6 md:p-12 gap-8 items-center bg-[#1e1e3a]">
+<div class="w-full md:w-2/5 order-2 md:order-1 flex flex-col justify-center md:text-right">
+<h2 class="font-headline text-3xl md:text-5xl text-white mb-4">Pequeños Detalles</h2>
+<div class="w-16 h-1 bg-primary mb-6 md:ml-auto"></div>
+<p class="font-body text-white/80 leading-relaxed text-lg">
+                            Son las cosas más simples las que más atesoro. Una mirada, una risa, o simplemente estar cerca de ti mientras el mundo sigue girando.
+                        </p>
+</div>
+<div class="w-full md:w-3/5 h-full order-1 md:order-2 flex items-center justify-center">
+<div class="pixel-photo-frame w-full max-w-sm aspect-[9/16] overflow-hidden">
+<img alt="Memory 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uhzemYZYAvcambrnYMJczWihePIlrZpO_QvmHbysoAgldyAPb7DR6-KoslTisIg8QPE49u754EZn7eKz005c791_HqmrdfI07yWTWboSlI5UgOdaBsDjRsFYkpDeU9pGzXQ7DEJAcx3pkYnLBTZg-bygHrCLy2otZ4alKDW74GzH7YMgp9CXH-AWCfSdd3iBxh94rfF47BdAvd5_AMg2-NgzlTXLg1pvb6EZENe4ooDKBCuzG-FQj_FU91vVGCzrsu3x2tRUi-J"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Page 3: Penultimate Image {{DATA:IMAGE:IMAGE_9}} & Love Message -->
+<div class="book-page z-20" id="page-3">
+<div class="page-content w-full h-full absolute inset-0 flex flex-col md:flex-row p-6 md:p-12 gap-8 items-center bg-[#251a3a]">
+<div class="w-full md:w-1/2 h-full flex items-center justify-center">
+<div class="pixel-photo-frame w-full max-w-sm aspect-[9/16] overflow-hidden relative">
+<img alt="Last Memory" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0uiVpcmm_rKb2thQZ-Gu5VAA71GVa0QQavG--1-0caEUq9RWjyWBuddTmihq_jwrh1nHur1bf51-SMi9ogMW9mpyQpZNhRqkO4OIbRKsk2X2_vYQx-KAYE5WzjhGG3_XRpi0lnmck3QlTKMOA-cHMmKU3nLy9XrgEkNekOhc8a20fHd6i1UWd95n8IoMFobSv8mCj_ooR1aZby9JcAJjZ_d2DxvC3ykNv00-d14-LbOveozYGIBMWEHf0rIaaH00OdswljuSixiXVA"/>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-black/60 backdrop-blur-sm">
+<p class="font-pixel text-[8px] text-white/80 text-center uppercase tracking-widest">Eterno presente</p>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex flex-col justify-center h-full">
+<h2 class="font-headline text-3xl text-white mb-6">Amor y Admiración</h2>
+<div class="flex-grow bg-surface-dim/50 pixel-border p-6 text-scroll overflow-y-auto">
+<p class="font-body text-lg text-white/90 leading-relaxed italic">
+                                Escribe aquí tu mensaje de amor eterno...<br/><br/>
+                                Eres la melodía en medio del ruido, el color en un mundo en blanco y negro. Mi admiración por ti no tiene límites, como el universo que habitamos en sueños. Gracias por ser mi guía, mi paz y mi aventura favorita. Cada día a tu lado es un regalo que cuido con el alma.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Page 4: Final Poetry Page -->
+<div class="book-page z-10" id="page-4">
+<div class="page-content w-full h-full absolute inset-0 flex flex-col items-center justify-center p-12 bg-[#0d0d19] overflow-hidden">
+<div class="absolute inset-0 dither-pattern opacity-10"></div>
+<div class="relative z-10 max-w-2xl text-center">
+<span class="material-symbols-outlined text-primary text-5xl mb-8 icon-glow animate-pulse">auto_awesome</span>
+<h3 class="font-headline text-4xl md:text-6xl text-white mb-8 italic">Versos de un Suspiro</h3>
+<div class="space-y-6 font-serif-fancy text-xl md:text-2xl text-white/80 leading-relaxed italic">
+<p>"En el jardín de los tiempos perdidos,<br/>tu voz es el eco que me trae de vuelta."</p>
+<p>"No hay estrella más brillante<br/>que el brillo de tus ojos al despertar."</p>
+<p>"Somos dos almas tejiendo constelaciones<br/>en la oscuridad de lo infinito."</p>
+</div>
+<div class="mt-12 pt-8 border-t border-primary/30">
+<p class="font-pixel text-[10px] text-primary/60 tracking-[0.5em]">FIN DEL CAPÍTULO UNO</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Book Navigation -->
+<div class="absolute bottom-[-80px] left-0 right-0 flex justify-between items-center px-4">
+<button class="bg-surface-dim pixel-border px-6 py-3 font-pixel text-[10px] text-primary hover:text-white transition-colors disabled:opacity-30" id="prev-page" onclick="prevPage()">
+                ← ANTERIOR
+            </button>
+<div class="flex flex-col items-center gap-2">
+<div class="flex gap-2" id="page-indicators">
+<div class="w-2 h-2 rounded-full bg-primary" data-idx="1"></div>
+<div class="w-2 h-2 rounded-full bg-white/20" data-idx="2"></div>
+<div class="w-2 h-2 rounded-full bg-white/20" data-idx="3"></div>
+<div class="w-2 h-2 rounded-full bg-white/20" data-idx="4"></div>
+</div>
+<div class="font-pixel text-[8px] text-white/40 uppercase tracking-widest" id="page-counter">MEMORIA 1 / 4</div>
+</div>
+<button class="bg-surface-dim pixel-border px-6 py-3 font-pixel text-[10px] text-primary hover:text-white transition-colors disabled:opacity-30" id="next-page" onclick="nextPage()">
+                SIGUIENTE →
+            </button>
+</div>
+</div>
+</div>
+<script>
+    const messages = ['Eres mi universo', 'Tu amor es mi guía', 'Siempre juntos', 'Bajo las mismas estrellas', 'Mi corazón es tuyo', 'Contigo el tiempo se detiene', 'Eternamente en tus ojos'];
+    const colors = ['#FFDAB9', '#FFB7C5', '#FFD700']; 
+    let colorIndex = 0;
+
+    function showRomanticMessage() {
+        const container = document.getElementById('romantic-message-container');
+        container.innerHTML = '';
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        const color = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length;
+        const msgElement = document.createElement('p');
+        msgElement.className = 'romantic-message text-xs md:text-sm tracking-tighter text-center max-w-sm';
+        msgElement.style.color = color;
+        msgElement.innerText = msg;
+        container.appendChild(msgElement);
+    }
+
+    let isLakeActive = false;
+    function toggleLakeScene() {
+        const nebula = document.getElementById('scene-nebula');
+        const lake = document.getElementById('scene-lake');
+        isLakeActive = !isLakeActive;
+        if(isLakeActive) {
+            nebula.classList.replace('opacity-100', 'opacity-0');
+            lake.classList.replace('opacity-0', 'opacity-100');
+            lake.classList.remove('pointer-events-none');
+            startLakeAnimations();
+        } else {
+            lake.classList.replace('opacity-100', 'opacity-0');
+            lake.classList.add('pointer-events-none');
+            nebula.classList.replace('opacity-0', 'opacity-100');
+            stopLakeAnimations();
+        }
+    }
+
+    // Memory Book Logic
+    let currentPage = 1;
+    const totalPages = 4;
+    let isBookOpen = false;
+
+    function toggleMemoryBook() {
+        const overlay = document.getElementById('memory-book-overlay');
+        const trigger = document.getElementById('book-trigger');
+        isBookOpen = !isBookOpen;
+        if(isBookOpen) {
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100');
+            trigger.querySelector('span').classList.add('text-primary');
+        } else {
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            overlay.classList.remove('opacity-100');
+            trigger.querySelector('span').classList.remove('text-primary');
+            resetBook();
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            const pageEl = document.getElementById(`page-${currentPage}`);
+            pageEl.classList.add('page-turned');
+            currentPage++;
+            updateUI();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            const pageEl = document.getElementById(`page-${currentPage}`);
+            pageEl.classList.remove('page-turned');
+            updateUI();
+        }
+    }
+
+    function updateUI() {
+        document.getElementById('prev-page').disabled = currentPage === 1;
+        document.getElementById('next-page').disabled = currentPage === totalPages;
+        document.getElementById('page-counter').innerText = `MEMORIA ${currentPage} / ${totalPages}`;
+        
+        // Indicators
+        const indicators = document.querySelectorAll('#page-indicators div');
+        indicators.forEach((ind, idx) => {
+            if (idx + 1 === currentPage) {
+                ind.className = 'w-2 h-2 rounded-full bg-primary';
+            } else {
+                ind.className = 'w-2 h-2 rounded-full bg-white/20';
+            }
+        });
+
+        // Adjust Z-index
+        for(let i = 1; i <= totalPages; i++) {
+            const el = document.getElementById(`page-${i}`);
+            if (i < currentPage) {
+                el.style.zIndex = 40 + i;
+            } else if (i === currentPage) {
+                el.style.zIndex = 40;
+            } else {
+                el.style.zIndex = 40 - i;
+            }
+        }
+    }
+
+    function resetBook() {
+        currentPage = 1;
+        for(let i = 1; i <= totalPages; i++) {
+            document.getElementById(`page-${i}`).classList.remove('page-turned');
+        }
+        updateUI();
+    }
+
+    let lakeIntervals = [];
+    function startLakeAnimations() {
+        const container = document.getElementById('lake-elements');
+        const ffInterval = setInterval(() => {
+            const ff = document.createElement('div');
+            ff.className = 'firefly';
+            ff.style.left = Math.random() * 100 + '%';
+            ff.style.top = (40 + Math.random() * 40) + '%';
+            ff.style.animation = `firefly ${3 + Math.random() * 4}s infinite ease-in-out`;
+            container.appendChild(ff);
+            setTimeout(() => ff.remove(), 7000);
+        }, 1000);
+        const fishInterval = setInterval(() => {
+            const x = 10 + Math.random() * 80;
+            const y = 65 + Math.random() * 20;
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.left = x + '%', ripple.style.top = y + '%', ripple.style.width = '10px', ripple.style.height = '5px';
+            ripple.style.animation = 'rippleEffect 2s forwards';
+            container.appendChild(ripple);
+            setTimeout(() => {
+                const fish = document.createElement('div');
+                fish.className = 'pixel-fish';
+                fish.style.left = x + '%', fish.style.top = y + '%';
+                fish.style.animation = 'fishJump 1.5s ease-in-out forwards';
+                container.appendChild(fish);
+                setTimeout(() => fish.remove(), 1500);
+                setTimeout(() => ripple.remove(), 2000);
+            }, 100);
+        }, 5000);
+        lakeIntervals.push(ffInterval, fishInterval);
+    }
+
+    function stopLakeAnimations() {
+        lakeIntervals.forEach(clearInterval);
+        lakeIntervals = [];
+        const elements = document.getElementById('lake-elements');
+        if (elements) elements.innerHTML = '';
+    }
+
+    updateUI();
+</script>
+</body></html>

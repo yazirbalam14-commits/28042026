@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "primary": "#8A2BE2",
+                "on-surface": "#e6e3f5",
+                "surface-dim": "#0d0d19",
+              },
+              "borderRadius": {
+                "DEFAULT": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "0.5rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "headline": ["Playfair Display", "serif"],
+                "body": ["Manrope", "sans-serif"],
+                "serif-fancy": ["Playfair Display", "serif"],
+                "pixel": ["'Press Start 2P'", "cursive"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0d19;
+            color: #e6e3f5;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .pixel-scanline {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .ethereal-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(138, 43, 226, 0.3);
+        }
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(138, 43, 226, 0.6));
+        }
+    
+        @keyframes messageFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .romantic-message {
+            font-family: 'Press Start 2P', cursive;
+            animation: messageFade 4s ease-in-out forwards;
+            text-shadow: 2px 2px #000;
+        }
+
+        .pixelated-bg {
+            image-rendering: pixelated;
+        }
+
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary/30 selection:text-white m-0 p-0 overflow-hidden w-screen h-screen">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0 overflow-hidden" id="bg-container">
+<!-- Main Fullscreen Background -->
+<div class="scene absolute inset-0 opacity-100" id="scene-main">
+<img alt="Pixel art background" class="w-full h-full object-cover block pixelated-bg" src="https://lh3.googleusercontent.com/aida/ADBb0ujMubvq4dRSVeR-x7pqJ4dwJEWunSRhD2f3H2E13VJeU-vsFCdgtaUW75APR_qByO6Nvjl9_QY36dy0NbrpDoli3Z_h2B_6xopAgHMia2qt-4ZecAnkTYjKoaKTpHBTpiGiLQiwxKyEeVLloj5n_lNAdxNjnI34S_utUhB1HOzIdUhmtWgq3HN_z-1Xu2BGW-XILFFyx8622C_stVaphRNutLGts00YctUGRDM9_A-YJuwE27UspcozgT7P1XHCDy5wWGP9okkszA"/>
+</div>
+<!-- Canvas for Rain of Light & Twinkle Effect -->
+<canvas id="particle-canvas"></canvas>
+<!-- Scanline Overlay -->
+<div class="absolute inset-0 pixel-scanline z-10 opacity-10"></div>
+</div>
+<!-- UI Layer -->
+<div class="relative z-20 min-h-screen flex flex-col pointer-events-none">
+<!-- Main Content Area: Centered Lyrics -->
+<main class="flex-grow flex items-center justify-center pointer-events-auto">
+<section class="text-center px-6 max-w-4xl">
+<div id="lyrics-content">
+<p class="font-serif-fancy italic text-4xl md:text-6xl text-white ethereal-glow leading-relaxed tracking-wide" id="main-lyrics">
+                        En el faro de tu amor...
+                    </p>
+</div>
+</section>
+<!-- Right-Side Vertical Icon Menu -->
+<aside class="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-12 items-center">
+<button class="group transition-all duration-300 pointer-events-auto" onclick="showRomanticMessage()">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">favorite</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">sports_esports</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">landscape</span>
+</button>
+<button class="group transition-all duration-300 pointer-events-auto">
+<span class="material-symbols-outlined text-white/60 group-hover:text-white icon-glow text-3xl">music_note</span>
+</button>
+</aside>
+</main>
+<!-- Footer Area -->
+<footer class="h-32 flex flex-col items-center justify-center relative px-8 pointer-events-none border-none">
+<!-- Message Container -->
+<div class="absolute top-0 w-full flex justify-center h-12 overflow-visible" id="romantic-message-container"></div>
+<!-- Subtle Info -->
+<div class="mt-auto pb-8 w-full flex justify-between items-center opacity-60 pointer-events-auto">
+<div class="text-[10px] uppercase tracking-[0.4em] text-[#FFDAB9] font-body" id="status-label">
+                    Ether Lullaby // Audio_Stream_Active
+                </div>
+<div class="text-[8px] uppercase tracking-widest text-[#FFD700] font-pixel">
+                    Sync Status: Stable
+                </div>
+</div>
+</footer>
+</div>
+<script>
+        const messages = [
+            'Eres mi universo',
+            'Tu amor es mi guía',
+            'Siempre juntos',
+            'Bajo las mismas estrellas',
+            'Mi corazón es tuyo',
+            'Contigo el tiempo se detiene',
+            'Eternamente en tus ojos'
+        ];
+        const colors = ['#FFFFFF', '#00FFFF', '#FF00FF', '#FFDAB9', '#FFD700']; 
+        
+        // Particle System for Canvas
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor(type) {
+                this.type = type; // 'rain' or 'twinkle'
+                this.init();
+            }
+
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedY = this.type === 'rain' ? (Math.random() * 2 + 1) : 0;
+                this.speedX = this.type === 'rain' ? (Math.random() * 0.5 - 0.25) : 0;
+                
+                const palette = ['#FFFFFF', '#00FFFF', '#FF00FF'];
+                this.color = palette[Math.floor(Math.random() * palette.length)];
+                this.opacity = Math.random();
+                this.fadeSpeed = Math.random() * 0.02 + 0.005;
+                this.growing = true;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                if (this.type === 'rain') {
+                    this.y += this.speedY;
+                    this.x += this.speedX;
+                    if (this.y > canvas.height) {
+                        this.y = -10;
+                        this.x = Math.random() * canvas.width;
+                    }
+                } else {
+                    // Twinkle logic
+                    if (this.growing) {
+                        this.opacity += this.fadeSpeed;
+                        if (this.opacity >= 1) this.growing = false;
+                    } else {
+                        this.opacity -= this.fadeSpeed;
+                        if (this.opacity <= 0) {
+                            this.init();
+                            this.opacity = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            // Rain of light
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle('rain'));
+            }
+            // Twinkles
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle('twinkle'));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+
+        function showRomanticMessage() {
+            const container = document.getElementById('romantic-message-container');
+            container.innerHTML = '';
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            const color = colors[Math.floor(Math.random() * colors.length)]; 
+            const msgElement = document.createElement('p');
+            msgElement.className = 'romantic-message text-xs md:text-sm tracking-tighter text-center max-w-sm';
+            msgElement.style.color = color;
+            msgElement.innerText = msg;
+            container.appendChild(msgElement);
+        }
+
+        // Initialize
+        window.onload = () => {
+            resize();
+            initParticles();
+            animate();
+        };
+    </script>
+</body></html>
