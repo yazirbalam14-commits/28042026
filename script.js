@@ -196,63 +196,80 @@ function createAtmosphere() {
 
 let celebrationLaunched = false;
 let fireworkCount = 0;
+let fireworkInterval = null;
 const fireworkMessages = ['TE AMO HILEN', 'GACHIAS POR TODO', 'TEQMMM MUAJAJAJA', 'CHICHIS MUAK', 'MUAK MUAK'];
 
-function createFirework() {
+function createFirework(isAnniversary = false) {
     const container = document.body;
-    const colors = ['#ca98ff', '#00fbfb', '#ffffff', '#ff51fa', '#fff700'];
+    const colors = ['#ca98ff', '#00fbfb', '#ffffff', '#ff51fa', '#fff700', '#ff9100'];
     
     const rocket = document.createElement('div');
-    rocket.className = 'fixed w-1.5 h-5 bg-white rounded-full';
+    rocket.className = 'fixed w-2 h-6 bg-white rounded-full';
     rocket.style.zIndex = '9999';
-    rocket.style.left = (15 + Math.random() * 70) + '%';
+    // Si es aniversario, sale del centro
+    rocket.style.left = isAnniversary ? '50%' : (15 + Math.random() * 70) + '%';
     rocket.style.bottom = '-20px';
     container.appendChild(rocket);
     
-    const targetY = 200 + Math.random() * 300;
+    const targetY = isAnniversary ? window.innerHeight / 2 : 200 + Math.random() * 300;
     fireworkCount++;
 
     gsap.to(rocket, {
         y: -targetY, duration: 1.2, ease: "power1.out",
         onComplete: () => {
-            // Mensajes aleatorios cada 3 fuegos
-            if (fireworkCount % 3 === 0) {
+            if (isAnniversary) {
                 const text = document.createElement('div');
-                text.className = 'fixed font-pixel text-primary z-[9999] pointer-events-none uppercase tracking-tighter text-center whitespace-nowrap';
+                text.className = 'fixed font-pixel text-primary z-[10000] pointer-events-none uppercase text-center flex flex-col items-center';
+                text.innerHTML = `<span class="text-xl md:text-3xl drop-shadow-[0_0_20px_#ca98ff]">¡FELIZ SEGUNDO ANIVERSARIO!</span><br><span class="text-lg md:text-xl text-white animate-pulse">MI HORMIGUITA ❤️</span>`;
+                text.style.left = '50%';
+                text.style.top = (window.innerHeight - targetY) + 'px';
+                text.style.transform = 'translate(-50%, -50%) scale(0)';
+                container.appendChild(text);
+
+                gsap.to(text, {
+                    scale: 1, opacity: 1, duration: 1, ease: "back.out(1.5)",
+                    onComplete: () => {
+                        setTimeout(() => gsap.to(text, { opacity: 0, scale: 2, duration: 1.5, onComplete: () => text.remove() }), 4000);
+                    }
+                });
+            } else if (fireworkCount % 3 === 0) {
+                const text = document.createElement('div');
+                text.className = 'fixed font-pixel text-secondary z-[9999] pointer-events-none uppercase text-center whitespace-nowrap';
                 text.innerText = fireworkMessages[Math.floor(Math.random() * fireworkMessages.length)];
                 text.style.left = rocket.style.left;
                 text.style.top = (window.innerHeight - targetY) + 'px';
                 text.style.transform = 'translate(-50%, -50%) scale(0)';
-                text.style.textShadow = '0 0 25px #ca98ff';
-                text.style.fontSize = '18px'; // Texto más grande
+                text.style.textShadow = '0 0 20px #00fbfb';
+                text.style.fontSize = '16px';
                 container.appendChild(text);
 
                 gsap.to(text, {
-                    scale: 1.3, opacity: 1, duration: 0.6, ease: "back.out(2)",
+                    scale: 1.2, opacity: 1, duration: 0.6, ease: "back.out(2)",
                     onComplete: () => {
                         gsap.to(text, { opacity: 0, y: -40, duration: 1.5, delay: 0.8, onComplete: () => text.remove() });
                     }
                 });
             }
 
-            // Partículas de estrellas MÁS GRANDES
-            for(let i=0; i<25; i++) {
+            // Explosión de estrellas
+            const pCount = isAnniversary ? 60 : 25;
+            for(let i=0; i<pCount; i++) {
                 const p = document.createElement('span');
                 p.className = 'fixed material-symbols-outlined pointer-events-none';
                 p.innerText = 'star'; p.style.zIndex = '9999';
                 p.style.left = rocket.style.left;
                 p.style.top = (window.innerHeight - targetY) + 'px';
                 p.style.color = colors[Math.floor(Math.random() * colors.length)];
-                p.style.fontSize = (Math.random() * 15 + 15) + 'px'; // Estrellas más grandes
+                p.style.fontSize = (isAnniversary ? 25 : 15) + 'px';
                 p.style.textShadow = `0 0 15px ${p.style.color}`;
                 container.appendChild(p);
 
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 200 + 50;
+                const dist = isAnniversary ? Math.random() * 400 + 100 : Math.random() * 200 + 50;
                 gsap.to(p, {
                     x: Math.cos(angle) * dist, y: Math.sin(angle) * dist,
-                    opacity: 0, scale: 0.2, rotation: 360,
-                    duration: 2.5, ease: "power2.out", onComplete: () => p.remove()
+                    opacity: 0, scale: 0.1, rotation: Math.random() * 360,
+                    duration: isAnniversary ? 4 : 2.5, ease: "power2.out", onComplete: () => p.remove()
                 });
             }
             rocket.remove();
@@ -264,29 +281,24 @@ function launchCelebration() {
     if (celebrationLaunched) return;
     celebrationLaunched = true;
     createFirework();
-    setInterval(createFirework, 3000); // Un poco más frecuente
+    fireworkInterval = setInterval(createFirework, 2500);
 }
 
-function showMainAnniversaryMsg() {
-    const container = document.body;
-    const msg = document.createElement('div');
-    msg.className = 'fixed inset-0 flex items-center justify-center z-[10000] pointer-events-none px-6';
-    msg.innerHTML = `<div class="bg-black/80 backdrop-blur-xl p-10 rounded-[3rem] border-4 border-primary shadow-[0_0_100px_rgba(202,152,255,0.5)] text-center transform scale-0 opacity-0">
-        <h2 class="text-primary font-pixel text-lg md:text-2xl tracking-widest uppercase mb-4">¡FELIZ SEGUNDO ANIVERSARIO!</h2>
-        <p class="text-white font-pixel text-sm md:text-lg animate-pulse">MI HORMIGUITA ❤️</p>
-    </div>`;
-    container.appendChild(msg);
-    
-    gsap.to(msg.firstChild, { scale: 1, opacity: 1, duration: 1, ease: "back.out(1.5)" });
-    setTimeout(() => {
-        gsap.to(msg.firstChild, { opacity: 0, scale: 2, duration: 1.5, onComplete: () => msg.remove() });
-    }, 4000);
+function stopCelebration() {
+    if (fireworkInterval) {
+        clearInterval(fireworkInterval);
+        fireworkInterval = null;
+    }
 }
 
 function startExperience() {
     const overlay = document.getElementById('start-overlay');
     const navBar = document.getElementById('bottom-nav-bar');
     const flash = document.getElementById('flash-overlay');
+    
+    // DETENER FUEGOS AL ENTRAR
+    stopCelebration();
+
     if(!overlay) return;
     
     if(flash) {
@@ -318,15 +330,15 @@ function updateCountdown() {
     if(eM) eM.innerText = m.toString().padStart(2, '0');
     if(eS) eS.innerText = s.toString().padStart(2, '0');
 
-    // Iniciar fuegos artificiales antes (a los 15s)
+    // Iniciar fuegos antes (a los 15s)
     if (diff > 0 && diff <= 15000) {
         launchCelebration();
     }
 
-    // Mensaje principal a los 2 segundos
-    if (diff > 0 && diff <= 2200 && !mainMsgShown) {
+    // Fuego artificial principal a los 2 segundos
+    if (diff > 0 && diff <= 2500 && !mainMsgShown) {
         mainMsgShown = true;
-        showMainAnniversaryMsg();
+        createFirework(true); // Lanzar el fuego de aniversario
     }
 
     if (diff > 0 && diff <= 10500 && container) {
