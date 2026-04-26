@@ -1,4 +1,4 @@
-const targetDate = new Date().getTime() + (30 * 1000);
+const targetDate = new Date('2026-04-28T00:00:00').getTime();
 let currentScene = 0, currentSongIndex = 0, bgInterval;
 let gatoDifficulty = 'hard';
 let scores = { player: 0, cpu: 0 };
@@ -46,41 +46,41 @@ const playlist = [
             { time: 52, duration: 4, text: "Nos volvemos a encontrar" },
             { time: 57, duration: 4, text: "Al final del infinito" },
             { time: 61, duration: 3, text: "Entre ríos púrpura" },
-            { time: 64, duration: 3, text: "A LA FUENTE REGRESAR" },
-            { time: 67, duration: 3, text: "AH-AH-AH" },
+            { time: 64, duration: 3, text: "A la fuente regresar" },
+            { time: 67, duration: 3, text: "Ah-ah-ah" },
             { time: 87, duration: 2, text: "En el faro de tu amor " },
             { time: 89, duration: 2, text: "En el regazo de tu piel" },
             { time: 93, duration: 3, text: "Me dejo llevar al sol" },
             { time: 98, duration: 2, text: "Al final del infinito" },
             { time: 101, duration: 2, text: "Entre ríos púrpura" },
             { time: 104, duration: 3, text: "Nos volvemos a encontrar" },
-            { time: 107, duration: 2, text: "AH-AH-AH" },
+            { time: 107, duration: 2, text: "Ah-ah-ah" },
             { time: 111, duration: 2, text: "Eres mi amor eterno" },
             { time: 113, duration: 3, text: "Mi ángel de la guarda" },
-            { time: 116, duration: 2, text: "AH-AH-AH" },
+            { time: 116, duration: 2, text: "Ah-ah-ah" },
             { time: 120, duration: 2, text: "Te lo digo desde el alma" },
             { time: 122, duration: 3, text: "Y con el corazón abierto" },
-            { time: 125, duration: 2, text: "AH-AH-AH" },
-            { time: 133, duration: 4, text: "ENTRE TUS ALAS DORMÍ" },
-            { time: 137, duration: 5, text: "Y EN TU MIRADA COMPRENSIVA, CRECÍ" },
-            { time: 143, duration: 5, text: "SIEMPRE CONFIASTE EN TODO LO QUE SOÑÉ" },
-            { time: 150, duration: 4, text: "Me cuidaste y me guiaste hasta aquí." },
-            { time: 155, duration: 2, text: "AH-AH-AH" },
+            { time: 125, duration: 2, text: "Ah-ah-ah" },
+            { time: 133, duration: 4, text: "Entre tus alas dormí" },
+            { time: 137, duration: 5, text: "Y en tu mirada comprensiva, crecí" },
+            { time: 143, duration: 5, text: "Siempre confiaste en todo lo que soñé" },
+            { time: 150, duration: 4, text: "Me cuidaste y me guiaste hasta aquí" },
+            { time: 155, duration: 2, text: "Ah-ah-ah" },
             { time: 158, duration: 2, text: "Te lo digo desde el alma" },
             { time: 161, duration: 3, text: "Y con el corazón abierto" },
-            { time: 164, duration: 2, text: "AH-AH-AH" },
+            { time: 164, duration: 2, text: "Ah-ah-ah" },
             { time: 167, duration: 2, text: "Eres mi amor eterno" },
             { time: 169, duration: 2, text: "Mi ángel de la guarda" },
-            { time: 172, duration: 2, text: "AH-AH-AH" },
+            { time: 172, duration: 2, text: "Ah-ah-ah" },
             { time: 175, duration: 2, text: "Te lo digo desde el alma" },
             { time: 178, duration: 2, text: "Y con el corazón abierto" },
-            { time: 180, duration: 2, text: "AH-AH-AH" },
+            { time: 180, duration: 2, text: "Ah-ah-ah" },
             { time: 184, duration: 2, text: "Eres mi amor eterno" },
             { time: 187, duration: 2, text: "Mi ángel de la guarda" },
-            { time: 190, duration: 2, text: "AH-AH-AH" },
+            { time: 190, duration: 2, text: "Ah-ah-ah" },
             { time: 193, duration: 2, text: "Te lo digo desde el alma" },
-            { time: 195, duration: 3, text: "MARÍA LLENA ERES DE GRACIA" },
-            { time: 198, duration: 2, text: "AH-AH-AH" },
+            { time: 195, duration: 3, text: "María llena eres de gracia" },
+            { time: 198, duration: 2, text: "Ah-ah-ah" },
             { time: 202, duration: 5, text: "TE AMO MUCHO, MUCHO MI HILEN" },
             { time: 207, duration: 5, text: "GRACIAS POR ESTOS DOS AÑOS JUNTOS MI CHAPA" },
             { time: 212, duration: 5, text: "TAL VEZ NO ES LO MEJOR PERO LO HICE CON MUCHO AMOR JEJEJEJE" },
@@ -120,13 +120,12 @@ const playlist = [
             { time: 151, duration: 5, text: "Si un día te sientes que ya no te quiero más" },
             { time: 158, duration: 3, text: "Te aseguro de nadie comparar" },
             { time: 161, duration: 6, text: "Tus besos, tus caricias, mucho menos tu mirar" },
-            { time: 168, duration: 5, text: "Apesar de la distancia solo tengo ojos para ti" },
+            { time: 168, duration: 5, text: "A pesar de la distancia solo tengo ojos para ti" },
             { time: 174, duration: 6, text: "Te amo mucho mi mujer hermosa" },
-            { time: 180, duration: 5, text: "OLAAAAA MUEJEJEJEJE , BESOTES " },
-            { time: 185, duration: 6, text: "EN LAS  CHICHIS MUAJAJAAJAJ TQMMMMMMMM" },
+            { time: 180, duration: 5, text: "OLAAAAA MUEJEJEJEJE, BESOTES" },
+            { time: 185, duration: 6, text: "EN LAS CHICHIS MUAJAJAAJAJ TQMMMMMMMM" },
             { time: 191, duration: 5, text: "ERES MI TODO TODO AMOR" },
-            { time: 200, duration: 4, text: "Y SI ME AMAS O NADOTA ?" },
-            
+            { time: 200, duration: 4, text: "Y SI ME AMAS O NADOTA?" }
         ]
     },
     {
@@ -161,7 +160,7 @@ const playlist = [
             { time: 158, duration: 3, text: "Que notes que yo sigo aquí" },
             { time: 162, duration: 4, text: "Que no notes que me fui" },
             { time: 166, duration: 4, text: "Que siempre me tienes aquí" },
-            { time: 170, duration: 4, text: "Espereme chapa :( " }
+            { time: 170, duration: 4, text: "Espéreme chapa :(" }
         ]
     }
 ];
@@ -170,6 +169,8 @@ const playlist = [
 function createAtmosphere() {
     const container = document.getElementById('world-container');
     if(!container) return;
+    
+    // Estrellas estáticas
     const sparkleColors = ['#ffffff', '#ffffff', '#fff700', '#00fbfb', '#ca98ff'];
     for(let i=0; i<300; i++) {
         const s = document.createElement('div');
@@ -183,6 +184,8 @@ function createAtmosphere() {
         s.style.animationDelay = (Math.random() * 5) + 's';
         container.appendChild(s);
     }
+
+    // Luces ambientales
     for(let i=0; i<35; i++) {
         const g = document.createElement('div');
         g.className = 'goya-light';
@@ -192,12 +195,81 @@ function createAtmosphere() {
         g.style.opacity = Math.random() * 0.2;
         container.appendChild(g);
     }
+
+    // Lluvia sutil
+    for(let i=0; i<50; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.style.left = Math.random() * 100 + '%';
+        drop.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+        drop.style.animationDelay = Math.random() * 2 + 's';
+        container.appendChild(drop);
+    }
+
+    // Estrellas fugaces muy frecuentes (a veces en pares)
+    setInterval(() => {
+        const count = Math.random() > 0.7 ? 2 : 1; 
+        for(let i=0; i<count; i++) {
+            setTimeout(createShootingStar, i * 300); 
+        }
+    }, 1900);
+
+    // Fuegos artificiales sutiles de fondo
+    setInterval(() => {
+        if (Math.random() > 0.7) {
+            createSubtleFirework();
+        }
+    }, 5000);
+}
+
+function createShootingStar() {
+    const container = document.getElementById('world-container');
+    if (!container) return;
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+    // Empezar siempre desde arriba en una posición horizontal aleatoria
+    star.style.top = '-5px';
+    star.style.left = (Math.random() * 100) + '%';
+    star.style.animation = 'shooting 2.5s linear forwards';
+    container.appendChild(star);
+    setTimeout(() => star.remove(), 2500);
+}
+
+function createSubtleFirework() {
+    const container = document.body;
+    const colors = ['#ca98ff', '#00fbfb', '#ffffff', '#ff51fa'];
+    const x = Math.random() * 100;
+    const y = 10 + Math.random() * 30;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    const core = document.createElement('div');
+    core.className = 'fixed w-1 h-1 rounded-full pointer-events-none';
+    core.style.left = x + '%';
+    core.style.top = y + '%';
+    core.style.backgroundColor = color;
+    core.style.boxShadow = `0 0 15px ${color}`;
+    core.style.zIndex = '1';
+    core.style.opacity = '0';
+    container.appendChild(core);
+
+    gsap.to(core, {
+        opacity: 0.6, scale: 15, duration: 2, ease: "power2.out",
+        onComplete: () => {
+            gsap.to(core, { opacity: 0, scale: 20, duration: 1, onComplete: () => core.remove() });
+        }
+    });
 }
 
 let celebrationLaunched = false;
 let fireworkCount = 0;
 let fireworkInterval = null;
-const fireworkMessages = ['TE AMO HILEN', 'GACHIAS POR TODO', 'TQMMM MUAJAJAJA', 'CHICHIS MUAK', 'MUAK MUAK'];
+const fireworkMessages = [
+    'TE AMO HILEN', 'GACHIAS POR TODO', 'TQMMM MUAJAJAJA', 'CHICHIS MUAK', 'MUAK MUAK',
+    'OLAAAA', 'ÑO ÑO ÑO', 'CHI QUE CHI', 'AUUUUUUU', 'COLA MAJAJA', 'A VER LA COLA JEJE',
+    'AMORRRR', 'ENANA TQMM', 'CHIKITRIKIS', 'HORMIGUITA', 'ADIOCHITO', 'DAME CHICHI',
+    'MUEJEJEJEJEJE', 'BESOTES', 'SI LEES ESTO ?', 'ESTOY LOQUE', 'LALALALALALA', 'SEAMOS UNO',
+    'ERES MI VIDA', 'MI CHAPA BELLA', 'DAME UN BESO', 'ÑO SEAS ASI', 'TE ADORO', 'SIEMPRE JUNTOS'
+];
 
 function createFirework(isAnniversary = false) {
     const container = document.body;
@@ -211,7 +283,7 @@ function createFirework(isAnniversary = false) {
     rocket.style.bottom = '-20px';
     container.appendChild(rocket);
     
-    const targetY = isAnniversary ? window.innerHeight / 2 : 200 + Math.random() * 300;
+    const targetY = isAnniversary ? window.innerHeight * 0.6 : 200 + Math.random() * 300;
     fireworkCount++;
 
     gsap.to(rocket, {
@@ -219,10 +291,11 @@ function createFirework(isAnniversary = false) {
         onComplete: () => {
             if (isAnniversary) {
                 const text = document.createElement('div');
-                text.className = 'fixed font-pixel text-primary z-[10000] pointer-events-none uppercase text-center flex flex-col items-center';
+                text.className = 'fixed font-pixel text-primary pointer-events-none uppercase text-center flex flex-col items-center';
+                text.style.zIndex = '10000';
                 text.innerHTML = `<span class="text-xl md:text-3xl drop-shadow-[0_0_20px_#ca98ff]">¡FELIZ SEGUNDO ANIVERSARIO!</span><br><span class="text-lg md:text-xl text-white animate-pulse">MI HORMIGUITA ❤️</span>`;
                 text.style.left = '50%';
-                text.style.top = (window.innerHeight - targetY) + 'px';
+                text.style.top = (window.innerHeight - targetY - 100) + 'px'; // 100px más arriba
                 text.style.transform = 'translate(-50%, -50%) scale(0)';
                 container.appendChild(text);
 
@@ -234,7 +307,8 @@ function createFirework(isAnniversary = false) {
                 });
             } else if (fireworkCount % 3 === 0) {
                 const text = document.createElement('div');
-                text.className = 'fixed font-pixel text-secondary z-[9999] pointer-events-none uppercase text-center whitespace-nowrap';
+                text.className = 'fixed font-pixel text-secondary pointer-events-none uppercase text-center whitespace-nowrap';
+                text.style.zIndex = '9999';
                 text.innerText = fireworkMessages[Math.floor(Math.random() * fireworkMessages.length)];
                 text.style.left = rocket.style.left;
                 text.style.top = (window.innerHeight - targetY) + 'px';
@@ -280,8 +354,14 @@ function createFirework(isAnniversary = false) {
 function launchCelebration() {
     if (celebrationLaunched) return;
     celebrationLaunched = true;
-    createFirework();
-    fireworkInterval = setInterval(createFirework, 2500);
+    
+    const launchPair = () => {
+        createFirework();
+        setTimeout(createFirework, 400); 
+    };
+
+    launchPair();
+    fireworkInterval = setInterval(launchPair, 3000);
 }
 
 function stopCelebration() {
@@ -339,6 +419,7 @@ function updateCountdown() {
     if (diff > 0 && diff <= 2500 && !mainMsgShown) {
         mainMsgShown = true;
         createFirework(true); // Lanzar el fuego de aniversario
+        setTimeout(createFirework, 400); // Lanzar un segundo fuego para el par
     }
 
     if (diff > 0 && diff <= 10500 && container) {
@@ -523,25 +604,191 @@ const memoryPages = [
     { img: 'libro/memoria_07.jpeg', title: 'Superando Obstáculos', text: 'MUEJEJEJEJE tremenda foto,en fin sabes que logramos llegar a este punto no fue algo fácil, pasamos por momentos cruciales que nos hicieron ver porque nos amamos con todo el alma 😭, se que a veces sientes que lo te amo o cosas así pero te soy sincero, yo siento que suelo interrumpir tu día ya que casi siempre estás ocupada con la escuela o con cosas de tu familia y ajá ,has notado que tal vez ya no soy tan intenso como un principio y no es porque te deje de amar,si no porque he normalizado tu ausencia y ajá me adapte a tus días y prefiero no molestarte con mensajes que luego luego tal vez ni me respondes y por eso cambie un poco pero te sigo amando como el primer día 😞❤️‍🩹, perdón si te confundo :(' },
     { img: 'libro/memoria_08.jpeg', title: 'Un Futuro Juntos', text: 'Ya cumplimos muchos días juntos amor 😍, quien diría que íbamos a aguantar tanto tiempo a distancia 😭,la verdad ya muero por tenerte junto a mi y espero que lo antes posible estemos juntos amor, quiero tocar tu cachetote y besarte mucho ,y yo sé que en el fondo muy en el fondo tuyo también lo quieres pero muy en el fondo MUAJAJAJAJAJAJAJA, sabes que estoy muy enamorado de ti y la verdad también estoy muy orgulloso de lo que has logrado en toda tu vida 🥹 ❤️‍🩹,eres una niña especial que más amo y admiro, eres todo lo que un hombre puede desear tener como pareja,tal vez te sientas menos pero en realidad eres una grandiosa mujer 😭 ❤️‍🩹, estoy orgulloso de ti 🥹' },
     { img: 'libro/memoria_09.jpeg', title: 'Gachias por Todo', text: 'MUEJEJEJEJE aún sigues leyendo esto , a ver solo para ver qué si leas esto , dime qué es lo que mas amo de tu cuerpo? , para ver si lees esto djdjdkdkdksksksksksksk,en fin gachias por estar conmigo 😞 ❤️‍🩹,no soy la gran cosa pero me esfuerzo por estar a tu nivel (aunque se que tal vez en tus ojos soy malo y siempre me quieres dejar) , en fin eres mi todo amor ❤️‍🩹, solo quiero agradecerte por estos hermosos dos años juntos 😭, espero seguir adelante contigo, nunca soltar tus manos y sobre todo cumplir con lo que siempre nos prometimos en las llamadas nocturnas, muchas pero muchas gracias 🫂,y perdón por ser un tonto a veces contigo 😞,lo único de valor que tengo en mi vida eres tú ❤️‍🩹' },
+    { isCounters: true },
     { isPenguin: true }, { isFinal: true }
 ];
+
+function calculateTimeUnits(startDate) {
+    const now = new Date();
+    const start = new Date(startDate);
+    const diffMs = now - start;
+    
+    // Totales absolutos
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const totalMinutes = Math.floor(totalSeconds / 60);
+    const totalHours = Math.floor(totalMinutes / 60);
+    const totalDays = Math.floor(totalHours / 24);
+    const totalWeeks = Math.floor(totalDays / 7);
+    
+    // Desglose por periodos
+    let years = now.getFullYear() - start.getFullYear();
+    let months = now.getMonth() - start.getMonth();
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+    
+    let days = now.getDate() - start.getDate();
+    if (days < 0) {
+        months--;
+        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += lastMonth.getDate();
+    }
+    
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    return { 
+        years, months, 
+        weeks: Math.floor(days / 7), 
+        remainingDays: days % 7,
+        totalWeeks, totalDays, totalHours, totalMinutes, totalSeconds 
+    };
+}
+
+function updateBookCounters() {
+    const talkEl = document.getElementById('counter-talk');
+    const loveEl = document.getElementById('counter-love');
+    if (!talkEl || !loveEl) return;
+
+    const talkTime = calculateTimeUnits('2024-04-24T00:00:00');
+    const loveTime = calculateTimeUnits('2024-04-28T00:00:00');
+
+    const fmt = (num) => num.toLocaleString('en-US');
+
+    const format = (t, color) => `
+        <div class="space-y-4 text-left">
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-black/40 p-3 rounded-xl border border-${color}/20">
+                    <div class="text-${color} text-xl font-bold font-mono">${fmt(t.years)}</div>
+                    <div class="text-[7px] uppercase tracking-tighter opacity-50">Años Juntos</div>
+                </div>
+                <div class="bg-black/40 p-3 rounded-xl border border-${color}/20">
+                    <div class="text-${color} text-xl font-bold font-mono">${fmt(t.totalMonths || (t.years * 12 + t.months))}</div>
+                    <div class="text-[7px] uppercase tracking-tighter opacity-50">Meses Totales</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+                <div class="bg-black/20 p-2 rounded-lg border border-white/5">
+                    <div class="text-white text-sm font-bold font-mono">${fmt(t.totalWeeks)}</div>
+                    <div class="text-[6px] uppercase opacity-40">Semanas</div>
+                </div>
+                <div class="bg-black/20 p-2 rounded-lg border border-white/5">
+                    <div class="text-white text-sm font-bold font-mono">${fmt(t.totalDays)}</div>
+                    <div class="text-[6px] uppercase opacity-40">Días</div>
+                </div>
+                <div class="bg-black/20 p-2 rounded-lg border border-white/5">
+                    <div class="text-white text-sm font-bold font-mono">${fmt(t.totalHours)}</div>
+                    <div class="text-[6px] uppercase opacity-40">Horas</div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex justify-between items-center bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                    <span class="text-[7px] uppercase tracking-widest opacity-40">Minutos Totales</span>
+                    <span class="text-xs font-bold font-mono text-white">${fmt(t.totalMinutes)}</span>
+                </div>
+                <div class="flex justify-between items-center bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                    <span class="text-[7px] uppercase tracking-widest opacity-40">Segundos Totales</span>
+                    <span class="text-xs font-bold font-mono text-primary animate-pulse">${fmt(t.totalSeconds)}</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    talkEl.innerHTML = format(talkTime, 'primary');
+    loveEl.innerHTML = format(loveTime, 'secondary');
+}
+
+let bookCounterInterval;
+
 function toggleMemoryBook() {
     const el = document.getElementById('memory-book-overlay'), navBar = document.getElementById('bottom-nav-bar'); if(!el) return;
-    if (el.classList.contains('hidden')) { el.classList.remove('hidden'); renderBookPage(); if(navBar) navBar.style.opacity = '0'; setTimeout(() => el.classList.add('opacity-100'), 10); }
-    else { el.classList.remove('opacity-100'); if(navBar) navBar.style.opacity = '1'; setTimeout(() => el.classList.add('hidden'), 500); }
+    if (el.classList.contains('hidden')) { 
+        el.classList.remove('hidden'); 
+        renderBookPage(); 
+        if(navBar) navBar.style.opacity = '0'; 
+        setTimeout(() => el.classList.add('opacity-100'), 10); 
+    }
+    else { 
+        el.classList.remove('opacity-100'); 
+        if(navBar) navBar.style.opacity = '1'; 
+        setTimeout(() => el.classList.add('hidden'), 500); 
+        clearInterval(bookCounterInterval);
+    }
 }
+
 function renderBookPage() {
     const v = document.getElementById('book-viewport'), p = memoryPages[currentBookPage]; if(!v) return;
-    if (p.isPenguin) v.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-[#1a1a2e]/90 rounded-[3rem] border-4 border-[#00fbfb] shadow-2xl p-10 text-center"><h2 class="text-[#00fbfb] font-pixel text-[12px] mb-8 tracking-widest uppercase">Lo que Admiro de Ti</h2><div onclick="talkPenguin()" class="cursor-pointer hover:scale-110 transition-transform text-8xl mb-8 filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">🐧</div><p id="penguin-text" class="text-white text-xl leading-relaxed font-light text-center w-full">Haz clic en el pingüino...</p></div>`;
+    clearInterval(bookCounterInterval);
+
+    if (p.isCounters) {
+        v.innerHTML = `
+            <div class="w-full h-full flex flex-col items-center justify-center bg-[#0e0e14]/95 rounded-[3rem] border-2 border-primary/30 p-8 shadow-2xl text-center overflow-y-auto">
+                <h2 class="text-primary font-pixel text-[10px] mb-6 tracking-widest uppercase">Nuestra Línea del Tiempo</h2>
+                
+                <div class="w-full max-w-md space-y-8">
+                    <div class="relative p-6 rounded-2xl bg-white/5 border border-white/10">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary px-4 py-1 rounded-full text-[8px] font-pixel text-black">PRIMERA VEZ QUE HABLAMOS</div>
+                        <div class="text-[8px] text-white/40 mb-2">24 DE ABRIL, 2024</div>
+                        <div id="counter-talk"></div>
+                    </div>
+
+                    <div class="relative p-6 rounded-2xl bg-white/5 border border-white/10">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary px-4 py-1 rounded-full text-[8px] font-pixel text-black">NUESTRO COMIENZO</div>
+                        <div class="text-[8px] text-white/40 mb-2">28 DE ABRIL, 2024</div>
+                        <div id="counter-love"></div>
+                    </div>
+                </div>
+                
+                <p class="mt-8 text-white/40 italic text-sm font-light italic">"Cada segundo a tu lado cuenta..."</p>
+            </div>
+        `;
+        updateBookCounters();
+        bookCounterInterval = setInterval(updateBookCounters, 1000);
+    }
+    else if (p.isPenguin) v.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-[#1a1a2e]/90 rounded-[3rem] border-4 border-[#00fbfb] shadow-2xl p-10 text-center"><h2 class="text-[#00fbfb] font-pixel text-[12px] mb-8 tracking-widest uppercase">Lo que Admiro de Ti</h2><div onclick="talkPenguin()" class="cursor-pointer hover:scale-110 transition-transform text-8xl mb-8 filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">🐧</div><p id="penguin-text" class="text-white text-xl leading-relaxed font-light text-center w-full">Haz clic en el pingüino...</p></div>`;
     else if (p.isFinal) v.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-black/80 rounded-[3rem] border-4 border-primary p-12 shadow-2xl text-center"><h2 class="text-5xl text-primary font-serif italic mb-10 uppercase w-full text-center">Nuestro Segundo Aniversario</h2><p class="text-white/90 text-xl font-light leading-relaxed max-w-4xl italic">Muaaaaaaak muaaaaaaak muaaaaaaak ❤️‍🩹, gachias por estos dos años ❤️‍🩹, eres mi todo tode MUEJEJEJEJE 🥺, espero que nunca me cambies por alguien que si puedas ver y sobre todo que no me escondas más cosas 😞, espero que te haya gustado este pequeño regalo 🎁, me rompí la cabeza como dos veces pero ahí está MUAJAJAJAJAJAJAJA, tal vez ni te guste el regalo pero bueno, aún te amo mucho y nunca te dejare de amar pase lo que pase ❤️‍🩹, vamos por un año más ❤️‍🩹, gachias por ser mi mujer 🫦,en verdad eres muy hermosa mi Abi 🥺❤️‍🩹, gachias por aguantar esta distancia que a veces nos rompe 😞</p><div class="mt-12 text-primary font-pixel text-[8px] tracking-[0.5em]">FIN DEL CAPÍTULO DOS</div></div>`;
     else v.innerHTML = `<div class="w-full h-full flex flex-col md:flex-row items-center justify-center gap-10 bg-[#1a1a2e]/90 rounded-[3rem] border-2 border-white/10 p-10 shadow-2xl overflow-hidden"><div class="w-full md:w-1/2 h-full book-img-container"><img src="${p.url || p.img}" class="pixel-bg"></div><div class="w-full md:w-1/2 overflow-y-auto max-h-full"><h2 class="text-3xl text-primary font-headline font-bold mb-6 italic border-b border-primary/30 pb-2 uppercase text-center">${p.title}</h2><p class="text-white/80 text-lg font-light leading-relaxed pr-4 text-left">${p.text}</p></div></div>`;
     const prev = document.getElementById('prev-page'), next = document.getElementById('next-page'); if(prev) prev.disabled = currentBookPage === 0; if(next) next.disabled = currentBookPage === memoryPages.length - 1;
 }
-const prideReasons = ["De tu esfuerzo en todos tus días sin importar qué", "De tu valentía para hacer las cosas difíciles", "De tus metas y sueños en la vida", "De lo pura e inocente que eres", "De lo religiosa que eres y que vayas a la iglesia", "De tu preocupación por mi bienestar", "De tu bondad infinita con la gente", "De que seas increíble en todo lo que haces", "De lo responsable que eres con tus cosas", "De que seas chula de cuerpo y alma", "De que me hagas sentir orgulloso de tenerte", "De que nunca me sueltas la mano en momentos difíciles", "De tu confianza en ti misma aunque a veces dudes", "De tu optimismo y humor único", "De tu humildad", "De tu capacidad de resolver problemas", "De que no te rindes fácil ni conmigo ni con nada", "De lo fuerte que eres aunque no lo veas", "De que has cambiado para estar bien conmigo", "De la grandiosa mujer que eres"];
+const prideReasons = [
+    "De tu esfuerzo en todos tus días sin importar qué", "De tu valentía para hacer las cosas difíciles",
+    "De tus metas y sueños en la vida", "De lo pura e inocente que eres",
+    "De lo religiosa que eres y que vayas a la iglesia", "De tu preocupación por mi bienestar",
+    "De tu bondad infinita con la gente", "De que seas increíble en todo lo que haces",
+    "De lo responsable que eres con tus cosas", "De que seas chula de cuerpo y alma",
+    "De que me hagas sentir orgulloso de tenerte", "De que nunca me sueltas la mano en momentos difíciles",
+    "De tu confianza en ti misma aunque a veces dudes", "De tu optimismo y humor único",
+    "De tu humildad", "De tu capacidad de resolver problemas",
+    "De que no te rindes fácil ni conmigo ni con nada", "De lo fuerte que eres aunque no lo veas",
+    "De que has cambiado para estar bien conmigo", "De la grandiosa mujer que eres",
+    "De tu paciencia infinita", "De como cuidas a los que amas",
+    "De tu inteligencia y sabiduría", "De tu dedicación a tus estudios",
+    "De que siempre buscas ser mejor persona", "De tu gran corazón"
+];
 function talkPenguin() { const t = document.getElementById('penguin-text'); if(t) gsap.to(t, { opacity: 0, duration: 1, onComplete: () => { t.innerText = prideReasons[Math.floor(Math.random()*prideReasons.length)]; gsap.to(t, { opacity: 1, duration: 0.4 }); } }); }
 function nextPage() { if(currentBookPage < memoryPages.length-1) { currentBookPage++; renderBookPage(); } }
 function prevPage() { if(currentBookPage > 0) { currentBookPage--; renderBookPage(); } }
-const loveReasons = ["Porque te has vuelto parte fundamental de mi vida", "Tus cartas que me hacen llorar de emoción", "Tus regaños que me hacen saber que te importo", "Tu preocupación por mi bienestar", "Tus fotos que me mandas", "Tu bondad con la gente", "Tu forma de decirme que me quieres", "La vibra que cargas y me transfieres", "Nuestros momentos siendo nosotros mismos", "Tu estilo de vestimenta único", "Tu manera de ser la mejor mujer del mundo", "Nuestras platicas nocturnas habalndo de lo que sea", "Lo dormilona que eres", "Tu hermosa voz que me cura el alma", "Tus besos a través de la pantalla", "Tu lealtad en nuestra relación", "Tu sonrisa que me cautivó por completo", "Tus preciosas manos que espero tocar pronto", "Tus llamadas que son mi lugar seguro", "La tranquilidad que me da tu presencia", "Tus cachetitos que quiero comer a besos", "Tu color canela tentación", "Tus inseguridades que yo amo con el alma"];
+const loveReasons = [
+    "Porque te has vuelto parte fundamental de mi vida", "Tus cartas que me hacen llorar de emoción",
+    "Tus regaños que me hacen saber que te importo", "Tu preocupación por mi bienestar",
+    "Tus fotos que me mandas", "Tu bondad con la gente",
+    "Tu forma de decirme que me quieres", "La vibra que cargas y me transfieres",
+    "Nuestros momentos siendo nosotros mismos", "Tu estilo de vestimenta único",
+    "Tu manera de ser la mejor mujer del mundo", "Nuestras platicas nocturnas habalndo de lo que sea",
+    "Lo dormilona que eres", "Tu hermosa voz que me cura el alma",
+    "Tus besos a través de la pantalla", "Tu lealtad en nuestra relación",
+    "Tu sonrisa que me cautivó por completo", "Tus preciosas manos que espero tocar pronto",
+    "Tus llamadas que son mi lugar seguro", "La tranquilidad que me da tu presencia",
+    "Tus cachetitos que quiero comer a besos", "Tu color canela tentación",
+    "Tus inseguridades que yo amo con el alma", "Por como me haces reír",
+    "Por ser mi refugio en días malos", "Por tu mirada que me hipnotiza",
+    "Por cada detalle que tienes conmigo", "Simplemente por ser tú"
+];
 function showRomanticMessage() { const container = document.getElementById('romantic-message-container'); if(!container) return; const msg = loveReasons[Math.floor(Math.random()*loveReasons.length)]; container.innerHTML = `<div class="bg-black/60 backdrop-blur-md px-10 py-4 rounded-full border border-tertiary/30 shadow-[0_0_30px_rgba(255,81,250,0.3)] animate-pulse inline-block"><p class="text-tertiary font-pixel text-xs tracking-widest uppercase text-center">RAZÓN POR AMARTE: ${msg}</p></div>`; setTimeout(() => { if(container.firstChild) gsap.to(container.firstChild, { opacity: 0, duration: 1, onComplete: () => container.innerHTML = '' })}, 3000); }
 
 document.addEventListener('DOMContentLoaded', () => {
