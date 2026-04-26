@@ -1,4 +1,4 @@
-const targetDate = new Date().getTime() + (2 * 60 * 1000);
+const targetDate = new Date('April 28, 2026 00:00:00').getTime();
 let currentScene = 0, currentSongIndex = 0, bgInterval;
 let gatoDifficulty = 'hard';
 let scores = { player: 0, cpu: 0 };
