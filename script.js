@@ -309,13 +309,13 @@ function startExperience() {
     gsap.to(overlay, { opacity: 0, duration: 1.5, onComplete: () => {
         overlay.style.display = 'none';
         if(navBar) {
-            navBar.classList.remove('opacity-0');
-            navBar.classList.add('opacity-100');
+            navBar.classList.remove('opacity-0', 'pointer-events-none');
+            navBar.classList.add('opacity-100', 'pointer-events-auto');
         }
         initWorld(); 
         createAtmosphere();
         
-        // Iniciar ciclo de 30 segundos
+        // Iniciar ciclo de 40 segundos
         bgInterval = setInterval(toggleBackground, 40000);
         
         playSong(0); 
