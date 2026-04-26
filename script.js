@@ -172,12 +172,12 @@ function createAtmosphere() {
     if(!container) return;
     
     // Colores para los destellos
-    const sparkleColors = ['#ffffff', '#fff700', '#00ff41', '#ff00d4', '#00fbfb', '#ff9100', '#ca98ff'];
+    const sparkleColors = ['#ffffff', '#ffffff', '#fff700', '#00fbfb', '#ca98ff'];
 
-    for(let i=0; i<150; i++) { // Aumentado a 150 para más brillo
+    for(let i=0; i<300; i++) { // Mucho más brillo
         const s = document.createElement('div');
         s.className = 'star-sparkle';
-        const sz = Math.random() * 4 + 1;
+        const sz = Math.random() * 3 + 1;
         const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
         
         s.style.width = sz + 'px';
@@ -185,18 +185,18 @@ function createAtmosphere() {
         s.style.left = Math.random() * 100 + '%';
         s.style.top = Math.random() * 100 + '%';
         s.style.backgroundColor = color;
-        s.style.boxShadow = `0 0 15px ${color}`; // Brillo del color correspondiente
-        s.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        s.style.boxShadow = `0 0 10px ${color}`; 
+        s.style.animationDuration = (Math.random() * 3 + 1) + 's';
         s.style.animationDelay = (Math.random() * 5) + 's';
         container.appendChild(s);
     }
-    for(let i=0; i<25; i++) {
+    for(let i=0; i<35; i++) { // Más luces goya
         const g = document.createElement('div');
         g.className = 'goya-light';
-        const sz = Math.random() * 180 + 100;
+        const sz = Math.random() * 200 + 120;
         g.style.width = sz + 'px', g.style.height = sz + 'px';
         g.style.left = Math.random() * 100 + '%', g.style.top = Math.random() * 100 + '%';
-        g.style.opacity = Math.random() * 0.15;
+        g.style.opacity = Math.random() * 0.2;
         container.appendChild(g);
     }
     for(let i=0; i<60; i++) {
@@ -206,6 +206,37 @@ function createAtmosphere() {
         d.style.animationDuration = (Math.random() * 1 + 1) + 's';
         d.style.animationDelay = (Math.random() * 5) + 's';
         container.appendChild(d);
+    }
+}
+
+function launchCelebration() {
+    const container = document.body;
+    const colors = ['#ca98ff', '#00fbfb', '#ff51fa', '#ffffff'];
+    
+    for(let i=0; i<100; i++) {
+        const star = document.createElement('div');
+        star.className = 'fixed z-[1000] pointer-events-none material-symbols-outlined';
+        star.innerText = 'star';
+        star.style.left = '50%';
+        star.style.top = '50%';
+        star.style.color = colors[Math.floor(Math.random() * colors.length)];
+        star.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        container.appendChild(star);
+
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 600 + 300;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+
+        gsap.to(star, {
+            x: tx,
+            y: ty,
+            rotation: Math.random() * 720,
+            opacity: 0,
+            duration: Math.random() * 2.5 + 1.5,
+            ease: "power3.out",
+            onComplete: () => star.remove()
+        });
     }
 }
 
