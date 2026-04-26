@@ -196,61 +196,63 @@ function createAtmosphere() {
 
 let celebrationLaunched = false;
 let fireworkCount = 0;
+const fireworkMessages = ['TE AMO HILEN', 'GACHIAS POR TODO', 'TEQMMM MUAJAJAJA', 'CHICHIS MUAK', 'MUAK MUAK'];
 
 function createFirework() {
     const container = document.body;
-    const colors = ['#ca98ff', '#00fbfb', '#ffffff', '#ff51fa'];
+    const colors = ['#ca98ff', '#00fbfb', '#ffffff', '#ff51fa', '#fff700'];
     
     const rocket = document.createElement('div');
-    rocket.className = 'fixed w-1 h-4 bg-white rounded-full';
+    rocket.className = 'fixed w-1.5 h-5 bg-white rounded-full';
     rocket.style.zIndex = '9999';
-    rocket.style.left = (20 + Math.random() * 60) + '%';
+    rocket.style.left = (15 + Math.random() * 70) + '%';
     rocket.style.bottom = '-20px';
     container.appendChild(rocket);
     
-    const targetY = 250 + Math.random() * 250;
+    const targetY = 200 + Math.random() * 300;
     fireworkCount++;
 
     gsap.to(rocket, {
-        y: -targetY, duration: 1.5, ease: "power1.out",
+        y: -targetY, duration: 1.2, ease: "power1.out",
         onComplete: () => {
-            // Cada 4 fuegos, sale el mensaje especial
-            if (fireworkCount % 4 === 0) {
+            // Mensajes aleatorios cada 3 fuegos
+            if (fireworkCount % 3 === 0) {
                 const text = document.createElement('div');
-                text.className = 'fixed font-pixel text-primary z-[9999] pointer-events-none uppercase tracking-tighter';
-                text.innerText = 'TE AMO HILEN';
+                text.className = 'fixed font-pixel text-primary z-[9999] pointer-events-none uppercase tracking-tighter text-center whitespace-nowrap';
+                text.innerText = fireworkMessages[Math.floor(Math.random() * fireworkMessages.length)];
                 text.style.left = rocket.style.left;
                 text.style.top = (window.innerHeight - targetY) + 'px';
                 text.style.transform = 'translate(-50%, -50%) scale(0)';
-                text.style.textShadow = '0 0 20px #ca98ff';
-                text.style.fontSize = '14px';
+                text.style.textShadow = '0 0 25px #ca98ff';
+                text.style.fontSize = '18px'; // Texto más grande
                 container.appendChild(text);
 
                 gsap.to(text, {
-                    scale: 1.5, opacity: 1, duration: 0.8, ease: "back.out(2)",
+                    scale: 1.3, opacity: 1, duration: 0.6, ease: "back.out(2)",
                     onComplete: () => {
-                        gsap.to(text, { opacity: 0, y: -50, duration: 2, delay: 1, onComplete: () => text.remove() });
+                        gsap.to(text, { opacity: 0, y: -40, duration: 1.5, delay: 0.8, onComplete: () => text.remove() });
                     }
                 });
             }
 
-            // Partículas de estrellas
-            for(let i=0; i<15; i++) {
+            // Partículas de estrellas MÁS GRANDES
+            for(let i=0; i<25; i++) {
                 const p = document.createElement('span');
                 p.className = 'fixed material-symbols-outlined pointer-events-none';
                 p.innerText = 'star'; p.style.zIndex = '9999';
                 p.style.left = rocket.style.left;
                 p.style.top = (window.innerHeight - targetY) + 'px';
                 p.style.color = colors[Math.floor(Math.random() * colors.length)];
-                p.style.fontSize = '10px';
+                p.style.fontSize = (Math.random() * 15 + 15) + 'px'; // Estrellas más grandes
+                p.style.textShadow = `0 0 15px ${p.style.color}`;
                 container.appendChild(p);
 
                 const angle = Math.random() * Math.PI * 2;
-                const dist = Math.random() * 120 + 30;
+                const dist = Math.random() * 200 + 50;
                 gsap.to(p, {
                     x: Math.cos(angle) * dist, y: Math.sin(angle) * dist,
-                    opacity: 0, scale: 0.5, rotation: 180,
-                    duration: 2, ease: "power2.out", onComplete: () => p.remove()
+                    opacity: 0, scale: 0.2, rotation: 360,
+                    duration: 2.5, ease: "power2.out", onComplete: () => p.remove()
                 });
             }
             rocket.remove();
@@ -261,12 +263,24 @@ function createFirework() {
 function launchCelebration() {
     if (celebrationLaunched) return;
     celebrationLaunched = true;
-    
-    // Lanzar el primero inmediatamente
     createFirework();
+    setInterval(createFirework, 3000); // Un poco más frecuente
+}
+
+function showMainAnniversaryMsg() {
+    const container = document.body;
+    const msg = document.createElement('div');
+    msg.className = 'fixed inset-0 flex items-center justify-center z-[10000] pointer-events-none px-6';
+    msg.innerHTML = `<div class="bg-black/80 backdrop-blur-xl p-10 rounded-[3rem] border-4 border-primary shadow-[0_0_100px_rgba(202,152,255,0.5)] text-center transform scale-0 opacity-0">
+        <h2 class="text-primary font-pixel text-lg md:text-2xl tracking-widest uppercase mb-4">¡FELIZ SEGUNDO ANIVERSARIO!</h2>
+        <p class="text-white font-pixel text-sm md:text-lg animate-pulse">MI HORMIGUITA ❤️</p>
+    </div>`;
+    container.appendChild(msg);
     
-    // Bucle infinito: un fuego cada 3.5 segundos
-    setInterval(createFirework, 3500);
+    gsap.to(msg.firstChild, { scale: 1, opacity: 1, duration: 1, ease: "back.out(1.5)" });
+    setTimeout(() => {
+        gsap.to(msg.firstChild, { opacity: 0, scale: 2, duration: 1.5, onComplete: () => msg.remove() });
+    }, 4000);
 }
 
 function startExperience() {
@@ -292,6 +306,7 @@ function startExperience() {
     }
 }
 
+let mainMsgShown = false;
 function updateCountdown() {
     const diff = targetDate - new Date().getTime();
     const d = Math.max(0, Math.floor(diff/86400000)), h = Math.max(0, Math.floor((diff%86400000)/3600000)), m = Math.max(0, Math.floor((diff%3600000)/60000)), s = Math.max(0, Math.floor((diff%60000)/1000));
@@ -302,6 +317,17 @@ function updateCountdown() {
     if(eH) eH.innerText = h.toString().padStart(2, '0');
     if(eM) eM.innerText = m.toString().padStart(2, '0');
     if(eS) eS.innerText = s.toString().padStart(2, '0');
+
+    // Iniciar fuegos artificiales antes (a los 15s)
+    if (diff > 0 && diff <= 15000) {
+        launchCelebration();
+    }
+
+    // Mensaje principal a los 2 segundos
+    if (diff > 0 && diff <= 2200 && !mainMsgShown) {
+        mainMsgShown = true;
+        showMainAnniversaryMsg();
+    }
 
     if (diff > 0 && diff <= 10500 && container) {
         container.classList.add('animate-pulse');
@@ -319,7 +345,6 @@ function updateCountdown() {
             container.classList.remove('animate-pulse');
             container.style.transform = 'scale(1)';
         }
-        launchCelebration();
     }
 }
 
