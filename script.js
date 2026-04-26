@@ -355,16 +355,21 @@ function renderPlaylist() {
 let gatoActive = false, gatoState = ["","","","","","","","",""];
 function toggleGamesMenu() {
     const overlay = document.getElementById('games-overlay');
+    const navBar = document.getElementById('bottom-nav-bar');
     if(!overlay) return;
     if (overlay.classList.contains('hidden')) {
         overlay.classList.remove('hidden'); showGameContainer('games-menu-container');
+        if(navBar) navBar.style.opacity = '0';
         setTimeout(() => overlay.classList.add('opacity-100'), 10);
     } else closeGamesMenu();
 }
 function closeGamesMenu() {
     const overlay = document.getElementById('games-overlay');
+    const navBar = document.getElementById('bottom-nav-bar');
     if(!overlay) return;
-    overlay.classList.remove('opacity-100'); setTimeout(() => overlay.classList.add('hidden'), 500);
+    overlay.classList.remove('opacity-100'); 
+    if(navBar) navBar.style.opacity = '1';
+    setTimeout(() => overlay.classList.add('hidden'), 500);
     stopAnimalTimer();
 }
 function showGameContainer(id) {
@@ -551,9 +556,19 @@ const memoryPages = [
 
 function toggleMemoryBook() {
     const el = document.getElementById('memory-book-overlay');
+    const navBar = document.getElementById('bottom-nav-bar');
     if(!el) return;
-    if (el.classList.contains('hidden')) { el.classList.remove('hidden'); renderBookPage(); setTimeout(() => el.classList.add('opacity-100'), 10); }
-    else { el.classList.remove('opacity-100'); setTimeout(() => el.classList.add('hidden'), 500); }
+    if (el.classList.contains('hidden')) { 
+        el.classList.remove('hidden'); 
+        renderBookPage(); 
+        if(navBar) navBar.style.opacity = '0';
+        setTimeout(() => el.classList.add('opacity-100'), 10); 
+    }
+    else { 
+        el.classList.remove('opacity-100'); 
+        if(navBar) navBar.style.opacity = '1';
+        setTimeout(() => el.classList.add('hidden'), 500); 
+    }
 }
 
 function renderBookPage() {
