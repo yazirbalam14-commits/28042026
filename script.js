@@ -197,7 +197,7 @@ function createAtmosphere() {
 let celebrationLaunched = false;
 let fireworkCount = 0;
 let fireworkInterval = null;
-const fireworkMessages = ['TE AMO HILEN', 'GACHIAS POR TODO', 'TEQMMM MUAJAJAJA', 'CHICHIS MUAK', 'MUAK MUAK'];
+const fireworkMessages = ['TE AMO HILEN', 'GACHIAS POR TODO', 'TQMMM MUAJAJAJA', 'CHICHIS MUAK', 'MUAK MUAK'];
 
 function createFirework(isAnniversary = false) {
     const container = document.body;
@@ -330,8 +330,8 @@ function updateCountdown() {
     if(eM) eM.innerText = m.toString().padStart(2, '0');
     if(eS) eS.innerText = s.toString().padStart(2, '0');
 
-    // Iniciar fuegos antes (a los 15s)
-    if (diff > 0 && diff <= 15000) {
+    // Iniciar fuegos antes (a la 1 hora = 3600s)
+    if (diff > 0 && diff <= 3600000) {
         launchCelebration();
     }
 
