@@ -304,9 +304,14 @@ function toggleBackground() {
 
 function startExperience() {
     const overlay = document.getElementById('start-overlay');
+    const navBar = document.getElementById('bottom-nav-bar');
     if(!overlay) return;
     gsap.to(overlay, { opacity: 0, duration: 1.5, onComplete: () => {
         overlay.style.display = 'none';
+        if(navBar) {
+            navBar.classList.remove('opacity-0');
+            navBar.classList.add('opacity-100');
+        }
         initWorld(); 
         createAtmosphere();
         
