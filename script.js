@@ -195,49 +195,78 @@ function createAtmosphere() {
 }
 
 let celebrationLaunched = false;
+let fireworkCount = 0;
+
+function createFirework() {
+    const container = document.body;
+    const colors = ['#ca98ff', '#00fbfb', '#ffffff', '#ff51fa'];
+    
+    const rocket = document.createElement('div');
+    rocket.className = 'fixed w-1 h-4 bg-white rounded-full';
+    rocket.style.zIndex = '9999';
+    rocket.style.left = (20 + Math.random() * 60) + '%';
+    rocket.style.bottom = '-20px';
+    container.appendChild(rocket);
+    
+    const targetY = 250 + Math.random() * 250;
+    fireworkCount++;
+
+    gsap.to(rocket, {
+        y: -targetY, duration: 1.5, ease: "power1.out",
+        onComplete: () => {
+            // Cada 4 fuegos, sale el mensaje especial
+            if (fireworkCount % 4 === 0) {
+                const text = document.createElement('div');
+                text.className = 'fixed font-pixel text-primary z-[9999] pointer-events-none uppercase tracking-tighter';
+                text.innerText = 'TE AMO HILEN';
+                text.style.left = rocket.style.left;
+                text.style.top = (window.innerHeight - targetY) + 'px';
+                text.style.transform = 'translate(-50%, -50%) scale(0)';
+                text.style.textShadow = '0 0 20px #ca98ff';
+                text.style.fontSize = '14px';
+                container.appendChild(text);
+
+                gsap.to(text, {
+                    scale: 1.5, opacity: 1, duration: 0.8, ease: "back.out(2)",
+                    onComplete: () => {
+                        gsap.to(text, { opacity: 0, y: -50, duration: 2, delay: 1, onComplete: () => text.remove() });
+                    }
+                });
+            }
+
+            // Partículas de estrellas
+            for(let i=0; i<15; i++) {
+                const p = document.createElement('span');
+                p.className = 'fixed material-symbols-outlined pointer-events-none';
+                p.innerText = 'star'; p.style.zIndex = '9999';
+                p.style.left = rocket.style.left;
+                p.style.top = (window.innerHeight - targetY) + 'px';
+                p.style.color = colors[Math.floor(Math.random() * colors.length)];
+                p.style.fontSize = '10px';
+                container.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 120 + 30;
+                gsap.to(p, {
+                    x: Math.cos(angle) * dist, y: Math.sin(angle) * dist,
+                    opacity: 0, scale: 0.5, rotation: 180,
+                    duration: 2, ease: "power2.out", onComplete: () => p.remove()
+                });
+            }
+            rocket.remove();
+        }
+    });
+}
+
 function launchCelebration() {
     if (celebrationLaunched) return;
     celebrationLaunched = true;
-    const container = document.body;
-    const colors = ['#ca98ff', '#00fbfb', '#ffffff'];
     
-    for(let f=0; f<3; f++) {
-        setTimeout(() => {
-            const rocket = document.createElement('div');
-            rocket.className = 'fixed w-1 h-4 bg-white rounded-full';
-            rocket.style.zIndex = '9999';
-            rocket.style.left = (25 + Math.random() * 50) + '%';
-            rocket.style.bottom = '-20px';
-            container.appendChild(rocket);
-            
-            const targetY = 250 + Math.random() * 200;
-            gsap.to(rocket, {
-                y: -targetY, duration: 1.5, ease: "power1.out",
-                onComplete: () => {
-                    for(let i=0; i<20; i++) {
-                        const p = document.createElement('span');
-                        p.className = 'fixed material-symbols-outlined pointer-events-none';
-                        p.innerText = 'star'; p.style.zIndex = '9999';
-                        p.style.left = rocket.style.left;
-                        p.style.top = (window.innerHeight - targetY) + 'px';
-                        p.style.color = colors[Math.floor(Math.random() * colors.length)];
-                        p.style.fontSize = '12px';
-                        p.style.textShadow = `0 0 10px ${p.style.color}`;
-                        container.appendChild(p);
-
-                        const angle = Math.random() * Math.PI * 2;
-                        const dist = Math.random() * 150 + 50;
-                        gsap.to(p, {
-                            x: Math.cos(angle) * dist, y: Math.sin(angle) * dist,
-                            opacity: 0, scale: 1.5, rotation: 180,
-                            duration: 2.5, ease: "power2.out", onComplete: () => p.remove()
-                        });
-                    }
-                    rocket.remove();
-                }
-            });
-        }, f * 1800);
-    }
+    // Lanzar el primero inmediatamente
+    createFirework();
+    
+    // Bucle infinito: un fuego cada 3.5 segundos
+    setInterval(createFirework, 3500);
 }
 
 function startExperience() {
