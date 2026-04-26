@@ -27,7 +27,7 @@ body {
 
 /* AJUSTES ESPECÍFICOS PARA FOTOS DE PAREJA */
 #scene-2 img {
-    transform: scale(1.02) !important; /* Menos zoom solicitado */
+    transform: scale(1.02) !important;
     object-position: center 30% !important;
 }
 
@@ -106,7 +106,83 @@ body {
     transition: all 0.3s;
 }
 
-.nav-book-btn:hover:not(:disabled) {
-    background: var(--primary);
-    color: white;
+/* Ajustes para dispositivos medianos (Tablets y móviles grandes) */
+@media (max-width: 768px) {
+    .pixel-bg {
+        transform: scale(1);
+        object-position: center !important;
+    }
+    
+    #lyric-line {
+        font-size: 1.5rem !important;
+        padding: 0 1rem;
+    }
+
+    #countdown-display {
+        padding: 1rem !important;
+        gap: 0.5rem !important;
+    }
+
+    #countdown-display span {
+        font-size: 1.5rem !important;
+    }
+
+    .nav-book-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 7px;
+    }
+
+    #music-menu {
+        width: 100% !important;
+    }
+
+    aside.fixed.right-6 {
+        right: 1rem;
+        gap: 1.5rem;
+        padding: 0.8rem;
+    }
+
+    /* Ajustes Libro para móvil */
+    #book-viewport > div {
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        gap: 1.5rem !important;
+        height: auto !important;
+        min-height: 100%;
+    }
+
+    #book-viewport .book-img-container {
+        width: 100% !important;
+        height: 250px !important;
+        flex-shrink: 0;
+    }
+
+    #book-viewport .md\:w-1\/2 {
+        width: 100% !important;
+    }
+
+    #book-viewport h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    #book-viewport p {
+        font-size: 1rem !important;
+        padding-right: 0 !important;
+    }
+
+    /* Gato móvil */
+    #gato-container button[id^="gato-cell-"] {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Ajustes específicos para móviles pequeños */
+@media (max-width: 480px) {
+    #animal-grid div[id^="animal-cell-"] {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 8px !important;
+    }
 }

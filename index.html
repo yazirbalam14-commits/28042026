@@ -46,14 +46,14 @@
     </div>
     <div class="relative z-20 flex flex-col items-center gap-8 text-center">
         <!-- Cuenta Regresiva -->
-        <div id="countdown-display" class="flex gap-6 mb-4 bg-black/40 p-8 rounded-[2rem] border border-white/10 backdrop-blur-sm">
-            <div class="flex flex-col"><span id="cd-days" class="text-5xl font-pixel text-primary">00</span><span class="text-[8px] font-pixel opacity-50 mt-2">DÍAS</span></div>
-            <div class="text-3xl text-primary/30 pt-1">:</div>
-            <div class="flex flex-col"><span id="cd-hours" class="text-5xl font-pixel text-primary">00</span><span class="text-[8px] font-pixel opacity-50 mt-2">HORAS</span></div>
-            <div class="text-3xl text-primary/30 pt-1">:</div>
-            <div class="flex flex-col"><span id="cd-minutes" class="text-5xl font-pixel text-primary">00</span><span class="text-[8px] font-pixel opacity-50 mt-2">MIN</span></div>
-            <div class="text-3xl text-primary/30 pt-1">:</div>
-            <div class="flex flex-col"><span id="cd-seconds" class="text-5xl font-pixel text-primary">00</span><span class="text-[8px] font-pixel opacity-50 mt-2">SEG</span></div>
+        <div id="countdown-display" class="flex gap-2 md:gap-6 mb-4 bg-black/40 p-4 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-white/10 backdrop-blur-sm">
+            <div class="flex flex-col"><span id="cd-days" class="text-2xl md:text-5xl font-pixel text-primary">00</span><span class="text-[6px] md:text-[8px] font-pixel opacity-50 mt-2">DÍAS</span></div>
+            <div class="text-xl md:text-3xl text-primary/30 pt-1">:</div>
+            <div class="flex flex-col"><span id="cd-hours" class="text-2xl md:text-5xl font-pixel text-primary">00</span><span class="text-[6px] md:text-[8px] font-pixel opacity-50 mt-2">HORAS</span></div>
+            <div class="text-xl md:text-3xl text-primary/30 pt-1">:</div>
+            <div class="flex flex-col"><span id="cd-minutes" class="text-2xl md:text-5xl font-pixel text-primary">00</span><span class="text-[6px] md:text-[8px] font-pixel opacity-50 mt-2">MIN</span></div>
+            <div class="text-xl md:text-3xl text-primary/30 pt-1">:</div>
+            <div class="flex flex-col"><span id="cd-seconds" class="text-2xl md:text-5xl font-pixel text-primary">00</span><span class="text-[6px] md:text-[8px] font-pixel opacity-50 mt-2">SEG</span></div>
         </div>
 
         <h1 id="secret-trigger" class="font-pixel text-primary text-xs md:text-sm tracking-[0.4em] animate-pulse uppercase cursor-pointer select-none">
@@ -150,10 +150,10 @@
 </div>
 
 <!-- LIBRO OVERLAY -->
-<div id="memory-book-overlay" class="fixed inset-0 z-[400] hidden bg-black/98 backdrop-blur-3xl opacity-0 transition-all flex flex-col items-center justify-center">
-    <button onclick="toggleMemoryBook()" class="absolute top-8 right-8 text-white/50 hover:text-white transition-all"><span class="material-symbols-outlined text-4xl">close</span></button>
-    <div id="book-viewport" class="w-[90%] max-w-5xl h-[75vh] relative"></div>
-    <div class="mt-10 flex gap-16">
+<div id="memory-book-overlay" class="fixed inset-0 z-[400] hidden bg-black/98 backdrop-blur-3xl opacity-0 transition-all flex flex-col items-center justify-center p-4">
+    <button onclick="toggleMemoryBook()" class="absolute top-4 right-4 md:top-8 md:right-8 text-white/50 hover:text-white transition-all z-[450]"><span class="material-symbols-outlined text-3xl md:text-4xl">close</span></button>
+    <div id="book-viewport" class="w-full max-w-5xl h-[80vh] md:h-[75vh] relative overflow-y-auto rounded-[2rem] md:rounded-[3rem]"></div>
+    <div class="mt-6 md:mt-10 flex gap-8 md:gap-16">
         <button id="prev-page" onclick="prevPage()" class="nav-book-btn">← VOLVER</button>
         <button id="next-page" onclick="nextPage()" class="nav-book-btn">SIGUIENTE →</button>
     </div>
