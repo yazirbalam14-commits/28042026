@@ -211,32 +211,116 @@ function createAtmosphere() {
 
 function launchCelebration() {
     const container = document.body;
-    const colors = ['#ca98ff', '#00fbfb', '#ff51fa', '#ffffff'];
+    const colors = ['#ca98ff', '#00fbfb', '#ff51fa', '#ffffff', '#fff700'];
     
-    for(let i=0; i<100; i++) {
-        const star = document.createElement('div');
-        star.className = 'fixed z-[1000] pointer-events-none material-symbols-outlined';
-        star.innerText = 'star';
-        star.style.left = '50%';
-        star.style.top = '50%';
-        star.style.color = colors[Math.floor(Math.random() * colors.length)];
-        star.style.fontSize = (Math.random() * 20 + 10) + 'px';
-        container.appendChild(star);
+    // Lanzar 5 cohetes de fuegos artificiales
+    for(let f=0; f<5; f++) {
+        setTimeout(() => {
+            const rocket = document.createElement('div');
+            rocket.className = 'fixed w-1.5 h-4 bg-white z-[1000] rounded-full';
+            const startX = 20 + Math.random() * 60;
+            rocket.style.left = startX + '%';
+            rocket.style.bottom = '-10px';
+            container.appendChild(rocket);
 
-        const angle = Math.random() * Math.PI * 2;
-        const velocity = Math.random() * 600 + 300;
-        const tx = Math.cos(angle) * velocity;
-        const ty = Math.sin(angle) * velocity;
+            const targetY = 150 + Math.random() * 350;
 
-        gsap.to(star, {
-            x: tx,
-            y: ty,
-            rotation: Math.random() * 720,
-            opacity: 0,
-            duration: Math.random() * 2.5 + 1.5,
-            ease: "power3.out",
-            onComplete: () => star.remove()
-        });
+            gsap.to(rocket, {
+                y: -targetY,
+                duration: 1.2,
+                ease: "power2.out",
+                onComplete: () => {
+                    // Explosión de luces
+                    for(let i=0; i<45; i++) {
+                        const p = document.createElement('div');
+                        p.className = 'fixed w-1.5 h-1.5 rounded-full z-[1000]';
+                        p.style.left = rocket.style.left;
+                        p.style.top = (window.innerHeight - targetY) + 'px';
+                        p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        p.style.boxShadow = `0 0 15px ${p.style.backgroundColor}`;
+                        container.appendChild(p);
+
+                        const angle = Math.random() * Math.PI * 2;
+                        const dist = Math.random() * 250 + 50;
+                        gsap.to(p, {
+                            x: Math.cos(angle) * dist,
+                            y: Math.sin(angle) * dist,
+                            opacity: 0,
+                            scale: 0.5,
+                            duration: 2.5,
+                            ease: "power3.out",
+                            onComplete: () => p.remove()
+                        });
+                    }
+                    rocket.remove();
+                }
+            });
+        }, f * 450);
+    }
+}
+
+function startExperience() {
+    const overlay = document.getElementById('start-overlay');
+    const navBar = document.getElementById('bottom-nav-bar');
+    const flash = document.getElementById('flash-overlay');
+    
+    if(!overlay) return;
+
+    // Transición cinematográfica (Flash Blanco)
+    if(flash) {
+        flash.style.opacity = '1';
+        flash.style.pointerEvents = 'auto';
+        
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            if(navBar) {
+                navBar.classList.remove('opacity-0', 'pointer-events-none');
+                navBar.classList.add('opacity-100', 'pointer-events-auto');
+            }
+            initWorld(); 
+            createAtmosphere();
+            bgInterval = setInterval(toggleBackground, 40000);
+            playSong(0); 
+            startLyrics();
+            
+            setTimeout(() => { 
+                flash.style.opacity = '0'; 
+                flash.style.pointerEvents = 'none';
+            }, 400);
+        }, 800);
+    }
+}
+
+function updateCountdown() {
+    const diff = targetDate - new Date().getTime();
+    const d = Math.max(0, Math.floor(diff/86400000)), h = Math.max(0, Math.floor((diff%86400000)/3600000)), m = Math.max(0, Math.floor((diff%3600000)/60000)), s = Math.max(0, Math.floor((diff%60000)/1000));
+    
+    const eD = document.getElementById('cd-days'), eH = document.getElementById('cd-hours'), eM = document.getElementById('cd-minutes'), eS = document.getElementById('cd-seconds');
+    const container = document.getElementById('countdown-display');
+
+    if(eD) eD.innerText = d.toString().padStart(2, '0');
+    if(eH) eH.innerText = h.toString().padStart(2, '0');
+    if(eM) eM.innerText = m.toString().padStart(2, '0');
+    if(eS) eS.innerText = s.toString().padStart(2, '0');
+
+    // Efecto de intensidad a los 10 segundos
+    if (diff > 0 && diff <= 10500 && container) {
+        container.classList.add('animate-pulse');
+        container.style.transform = 'scale(1.1)';
+        container.style.boxShadow = '0 0 50px rgba(202, 152, 255, 0.6)';
+        container.style.borderColor = 'var(--primary)';
+    }
+
+    const startBtn = document.getElementById('start-btn');
+    if (diff <= 0 && startBtn && startBtn.disabled) {
+        startBtn.disabled = false;
+        startBtn.innerText = "COMENZAR";
+        startBtn.className = "px-12 py-4 bg-gradient-to-r from-primary to-primary-dim rounded-full text-white font-bold tracking-tight transition-all transform active:scale-95 text-lg min-w-[240px] z-50 uppercase shadow-[0_0_40px_rgba(202,152,255,0.6)] animate-bounce";
+        if(container) {
+            container.classList.remove('animate-pulse');
+            container.style.transform = 'scale(1)';
+        }
+        launchCelebration(); 
     }
 }
 
