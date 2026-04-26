@@ -2,7 +2,7 @@ const targetDate = new Date().getTime() + (30 * 1000);
 let currentScene = 0, currentSongIndex = 0, bgInterval;
 let gatoDifficulty = 'hard';
 let scores = { player: 0, cpu: 0 };
-let selectedIndices = []; // Única declaración global
+let selectedIndices = []; 
 
 const scenes = [
     { id: 'scene-0', url: 'imagenes/memoria_00.png' },
@@ -170,92 +170,72 @@ const playlist = [
 function createAtmosphere() {
     const container = document.getElementById('world-container');
     if(!container) return;
-    
-    // Colores para los destellos
     const sparkleColors = ['#ffffff', '#ffffff', '#fff700', '#00fbfb', '#ca98ff'];
-
-    for(let i=0; i<300; i++) { // Mucho más brillo
+    for(let i=0; i<300; i++) {
         const s = document.createElement('div');
         s.className = 'star-sparkle';
         const sz = Math.random() * 3 + 1;
         const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
-        
-        s.style.width = sz + 'px';
-        s.style.height = sz + 'px';
-        s.style.left = Math.random() * 100 + '%';
-        s.style.top = Math.random() * 100 + '%';
-        s.style.backgroundColor = color;
-        s.style.boxShadow = `0 0 10px ${color}`; 
+        s.style.width = sz + 'px'; s.style.height = sz + 'px';
+        s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 100 + '%';
+        s.style.backgroundColor = color; s.style.boxShadow = `0 0 10px ${color}`;
         s.style.animationDuration = (Math.random() * 3 + 1) + 's';
         s.style.animationDelay = (Math.random() * 5) + 's';
         container.appendChild(s);
     }
-    for(let i=0; i<35; i++) { // Más luces goya
+    for(let i=0; i<35; i++) {
         const g = document.createElement('div');
         g.className = 'goya-light';
         const sz = Math.random() * 200 + 120;
-        g.style.width = sz + 'px', g.style.height = sz + 'px';
-        g.style.left = Math.random() * 100 + '%', g.style.top = Math.random() * 100 + '%';
+        g.style.width = sz + 'px'; g.style.height = sz + 'px';
+        g.style.left = Math.random() * 100 + '%'; g.style.top = Math.random() * 100 + '%';
         g.style.opacity = Math.random() * 0.2;
         container.appendChild(g);
     }
-    for(let i=0; i<60; i++) {
-        const d = document.createElement('div');
-        d.className = 'rain-drop';
-        d.style.left = Math.random() * 100 + '%';
-        d.style.animationDuration = (Math.random() * 1 + 1) + 's';
-        d.style.animationDelay = (Math.random() * 5) + 's';
-        container.appendChild(d);
-    }
 }
 
+let celebrationLaunched = false;
 function launchCelebration() {
+    if (celebrationLaunched) return;
+    celebrationLaunched = true;
     const container = document.body;
     const colors = ['#ca98ff', '#00fbfb', '#ff51fa', '#ffffff', '#fff700'];
     
-    // Lanzar 5 cohetes de fuegos artificiales
-    for(let f=0; f<5; f++) {
+    for(let f=0; f<10; f++) {
         setTimeout(() => {
             const rocket = document.createElement('div');
-            rocket.className = 'fixed w-1.5 h-4 bg-white z-[1000] rounded-full';
-            const startX = 20 + Math.random() * 60;
-            rocket.style.left = startX + '%';
-            rocket.style.bottom = '-10px';
+            rocket.className = 'fixed w-1.5 h-6 bg-white rounded-full';
+            rocket.style.zIndex = '9999';
+            rocket.style.left = (10 + Math.random() * 80) + '%';
+            rocket.style.bottom = '-20px';
             container.appendChild(rocket);
-
-            const targetY = 150 + Math.random() * 350;
-
+            
+            const targetY = 200 + Math.random() * 400;
             gsap.to(rocket, {
-                y: -targetY,
-                duration: 1.2,
-                ease: "power2.out",
+                y: -targetY, duration: 1.2, ease: "power2.out",
                 onComplete: () => {
-                    // Explosión de luces
-                    for(let i=0; i<45; i++) {
-                        const p = document.createElement('div');
-                        p.className = 'fixed w-1.5 h-1.5 rounded-full z-[1000]';
+                    for(let i=0; i<40; i++) {
+                        const p = document.createElement('span');
+                        p.className = 'fixed material-symbols-outlined pointer-events-none';
+                        p.innerText = 'star'; p.style.zIndex = '9999';
                         p.style.left = rocket.style.left;
                         p.style.top = (window.innerHeight - targetY) + 'px';
-                        p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                        p.style.boxShadow = `0 0 15px ${p.style.backgroundColor}`;
+                        p.style.color = colors[Math.floor(Math.random() * colors.length)];
+                        p.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                        p.style.textShadow = `0 0 30px ${p.style.color}`;
                         container.appendChild(p);
-
                         const angle = Math.random() * Math.PI * 2;
-                        const dist = Math.random() * 250 + 50;
+                        const dist = Math.random() * 400 + 100;
                         gsap.to(p, {
-                            x: Math.cos(angle) * dist,
-                            y: Math.sin(angle) * dist,
-                            opacity: 0,
-                            scale: 0.5,
-                            duration: 2.5,
-                            ease: "power3.out",
-                            onComplete: () => p.remove()
+                            x: Math.cos(angle) * dist, y: Math.sin(angle) * dist,
+                            opacity: 0, scale: 3, rotation: Math.random() * 720,
+                            duration: 3, ease: "power3.out", onComplete: () => p.remove()
                         });
                     }
                     rocket.remove();
                 }
             });
-        }, f * 450);
+        }, f * 400);
     }
 }
 
@@ -263,30 +243,21 @@ function startExperience() {
     const overlay = document.getElementById('start-overlay');
     const navBar = document.getElementById('bottom-nav-bar');
     const flash = document.getElementById('flash-overlay');
-    
     if(!overlay) return;
-
-    // Transición cinematográfica (Flash Blanco)
+    
     if(flash) {
         flash.style.opacity = '1';
         flash.style.pointerEvents = 'auto';
-        
         setTimeout(() => {
             overlay.style.display = 'none';
             if(navBar) {
                 navBar.classList.remove('opacity-0', 'pointer-events-none');
                 navBar.classList.add('opacity-100', 'pointer-events-auto');
             }
-            initWorld(); 
-            createAtmosphere();
+            initWorld(); createAtmosphere();
             bgInterval = setInterval(toggleBackground, 40000);
-            playSong(0); 
-            startLyrics();
-            
-            setTimeout(() => { 
-                flash.style.opacity = '0'; 
-                flash.style.pointerEvents = 'none';
-            }, 400);
+            playSong(0); startLyrics();
+            setTimeout(() => { flash.style.opacity = '0'; flash.style.pointerEvents = 'none'; }, 500);
         }, 800);
     }
 }
@@ -294,208 +265,101 @@ function startExperience() {
 function updateCountdown() {
     const diff = targetDate - new Date().getTime();
     const d = Math.max(0, Math.floor(diff/86400000)), h = Math.max(0, Math.floor((diff%86400000)/3600000)), m = Math.max(0, Math.floor((diff%3600000)/60000)), s = Math.max(0, Math.floor((diff%60000)/1000));
-    
     const eD = document.getElementById('cd-days'), eH = document.getElementById('cd-hours'), eM = document.getElementById('cd-minutes'), eS = document.getElementById('cd-seconds');
     const container = document.getElementById('countdown-display');
-
+    
     if(eD) eD.innerText = d.toString().padStart(2, '0');
     if(eH) eH.innerText = h.toString().padStart(2, '0');
     if(eM) eM.innerText = m.toString().padStart(2, '0');
     if(eS) eS.innerText = s.toString().padStart(2, '0');
 
-    // Efecto de intensidad a los 10 segundos
     if (diff > 0 && diff <= 10500 && container) {
         container.classList.add('animate-pulse');
         container.style.transform = 'scale(1.1)';
-        container.style.boxShadow = '0 0 50px rgba(202, 152, 255, 0.6)';
-        container.style.borderColor = 'var(--primary)';
+        container.style.borderColor = '#ca98ff';
+        container.style.boxShadow = '0 0 60px rgba(202, 152, 255, 0.7)';
     }
 
     const startBtn = document.getElementById('start-btn');
     if (diff <= 0 && startBtn && startBtn.disabled) {
         startBtn.disabled = false;
         startBtn.innerText = "COMENZAR";
-        startBtn.className = "px-12 py-4 bg-gradient-to-r from-primary to-primary-dim rounded-full text-white font-bold tracking-tight transition-all transform active:scale-95 text-lg min-w-[240px] z-50 uppercase shadow-[0_0_40px_rgba(202,152,255,0.6)] animate-bounce";
+        startBtn.className = "px-12 py-4 bg-gradient-to-r from-primary to-primary-dim rounded-full text-white font-bold tracking-tight transition-all transform active:scale-95 text-lg min-w-[240px] z-50 uppercase shadow-[0_0_50px_rgba(202,152,255,0.6)] animate-bounce";
         if(container) {
             container.classList.remove('animate-pulse');
             container.style.transform = 'scale(1)';
         }
-        launchCelebration(); 
+        launchCelebration();
     }
 }
 
 // --- AUDIO ---
 const bgAudio = document.getElementById('bg-music');
-
-// Configuración inicial del audio
 if(bgAudio) {
-    bgAudio.addEventListener('ended', () => {
-        console.log("Canción terminada, pasando a la siguiente...");
-        nextSong();
-    });
-
-    bgAudio.addEventListener('error', (e) => {
-        console.error("Error detectado en el elemento de audio:", bgAudio.error);
-        const container = document.getElementById('romantic-message-container');
-        if(container) {
-            container.innerHTML = `<div class="bg-red-500/20 backdrop-blur-md p-4 rounded-xl border border-red-500/50"><p class="text-white text-[10px] font-pixel">ERROR DE CONEXIÓN MUSICAL... REINTENTANDO</p></div>`;
-            setTimeout(() => { container.innerHTML = ''; }, 5000);
-        }
-    });
+    bgAudio.addEventListener('ended', () => nextSong());
 }
 
 function playSong(idx) {
-    currentSongIndex = idx;
-    if(!bgAudio) return;
-    
-    // Limpiar letra actual
-    const d = document.getElementById('lyric-line'); 
-    if(d) {
-        d.innerText = "";
-        d.style.opacity = '0';
-    }
-
-    // Asegurar que la ruta sea correcta y limpia
-    const songFile = playlist[idx].file;
-    bgAudio.src = songFile;
-    
-    console.log("Intentando reproducir:", playlist[idx].title, "Archivo:", songFile);
-    
-    bgAudio.load(); // Forzar recarga del recurso
-    
-    bgAudio.play().then(() => {
-        console.log("Reproduciendo exitosamente:", playlist[idx].title);
-        renderPlaylist();
-    }).catch(e => {
-        console.error("Error al reproducir " + playlist[idx].title + ":", e);
-        // Si falla, intentamos la siguiente después de un breve momento
-        if (e.name === 'NotSupportedError' || e.name === 'AbortError' || e.name === 'NotAllowedError') {
-            console.warn("Fallo crítico en reproducción, saltando a la siguiente canción en 3s...");
-            setTimeout(nextSong, 3000);
-        }
-    });
+    currentSongIndex = idx; if(!bgAudio) return;
+    const d = document.getElementById('lyric-line'); if(d) { d.innerText = ""; d.style.opacity = '0'; }
+    bgAudio.src = playlist[idx].file; bgAudio.load();
+    bgAudio.play().then(() => renderPlaylist()).catch(() => setTimeout(nextSong, 3000));
 }
 function prevSong() { playSong((currentSongIndex - 1 + playlist.length) % playlist.length); }
 function nextSong() { playSong((currentSongIndex + 1) % playlist.length); }
 function togglePlay() {
-    const icon = document.getElementById('play-pause-icon');
-    if(!bgAudio || !icon) return;
-    if(bgAudio.paused) { bgAudio.play(); icon.innerText = 'pause'; }
-    else { bgAudio.pause(); icon.innerText = 'play_arrow'; }
+    const icon = document.getElementById('play-pause-icon'); if(!bgAudio || !icon) return;
+    if(bgAudio.paused) { bgAudio.play(); icon.innerText = 'pause'; } else { bgAudio.pause(); icon.innerText = 'play_arrow'; }
 }
-
 function startLyrics() {
-    const d = document.getElementById('lyric-line');
-    if(!bgAudio || !d) return;
+    const d = document.getElementById('lyric-line'); if(!bgAudio || !d) return;
     bgAudio.ontimeupdate = () => {
-        const cur = playlist[currentSongIndex].lyrics;
-        let line = null;
+        const cur = playlist[currentSongIndex].lyrics; let line = null;
         for (let i = 0; i < cur.length; i++) {
-            if (bgAudio.currentTime >= cur[i].time && bgAudio.currentTime < (cur[i].time + cur[i].duration)) {
-                line = cur[i].text; break;
-            }
+            if (bgAudio.currentTime >= cur[i].time && bgAudio.currentTime < (cur[i].time + cur[i].duration)) { line = cur[i].text; break; }
         }
-        if (line) { if (d.innerText !== line) { d.innerText = line; d.style.opacity = '1'; } }
-        else { d.style.opacity = '0'; }
+        if (line) { if (d.innerText !== line) { d.innerText = line; d.style.opacity = '1'; } } else { d.style.opacity = '0'; }
     };
 }
-
-// --- FONDOS ---
 function toggleBackground() {
     if (bgInterval) clearInterval(bgInterval);
-    
-    const cur = document.getElementById(`scene-${currentScene}`);
-    if(!cur) return;
-    cur.style.opacity = '0';
-    
+    const cur = document.getElementById(`scene-${currentScene}`); if(!cur) return; cur.style.opacity = '0';
     currentScene = (currentScene + 1) % scenes.length;
-    
-    const next = document.getElementById(`scene-${currentScene}`);
-    if(next) next.style.opacity = '1';
-    
-    // Reiniciar el contador de 30 segundos
+    const next = document.getElementById(`scene-${currentScene}`); if(next) next.style.opacity = '1';
     bgInterval = setInterval(toggleBackground, 40000);
 }
-
-function startExperience() {
-    const overlay = document.getElementById('start-overlay');
-    const navBar = document.getElementById('bottom-nav-bar');
-    if(!overlay) return;
-    gsap.to(overlay, { opacity: 0, duration: 1.5, onComplete: () => {
-        overlay.style.display = 'none';
-        if(navBar) {
-            navBar.classList.remove('opacity-0', 'pointer-events-none');
-            navBar.classList.add('opacity-100', 'pointer-events-auto');
-        }
-        initWorld(); 
-        createAtmosphere();
-        
-        // Iniciar ciclo de 40 segundos
-        bgInterval = setInterval(toggleBackground, 40000);
-        
-        playSong(0); 
-        startLyrics();
-    }});
-}
-
 function initWorld() {
-    const container = document.getElementById('world-container');
-    if(!container) return;
-    container.innerHTML = '';
+    const container = document.getElementById('world-container'); if(!container) return; container.innerHTML = '';
     scenes.forEach((s, i) => {
-        const div = document.createElement('div');
-        div.id = s.id; div.className = `absolute inset-0 transition-opacity duration-[2500ms] ${i===0 ? 'opacity-100' : 'opacity-0'}`;
-        div.innerHTML = `<img src="${s.url}" class="pixel-bg">`;
-        container.appendChild(div);
+        const div = document.createElement('div'); div.id = s.id; div.className = `absolute inset-0 transition-opacity duration-[2500ms] ${i===0 ? 'opacity-100' : 'opacity-0'}`;
+        div.innerHTML = `<img src="${s.url}" class="pixel-bg">`; container.appendChild(div);
     });
 }
-
-function toggleMusicMenu() { 
-    const el = document.getElementById('music-menu');
-    if(el) el.classList.toggle('translate-x-full'); 
-}
+function toggleMusicMenu() { const el = document.getElementById('music-menu'); if(el) el.classList.toggle('translate-x-full'); }
 function renderPlaylist() {
-    const container = document.getElementById('playlist-items'); if(!container) return;
-    container.innerHTML = '';
+    const container = document.getElementById('playlist-items'); if(!container) return; container.innerHTML = '';
     playlist.forEach((song, i) => {
-        const btn = document.createElement('button');
-        btn.className = `w-full text-left p-4 rounded-xl transition-all ${i===currentSongIndex ? 'bg-primary/20 border border-primary/40' : 'hover:bg-white/5 border border-transparent'}`;
+        const btn = document.createElement('button'); btn.className = `w-full text-left p-4 rounded-xl transition-all ${i===currentSongIndex ? 'bg-primary/20 border border-primary/40' : 'hover:bg-white/5 border border-transparent'}`;
         btn.innerHTML = `<div class="text-[8px] uppercase text-secondary font-pixel">Track ${i+1}</div><div class="text-xs font-bold text-white/80">${song.title}</div>`;
-        btn.onclick = () => playSong(i);
-        container.appendChild(btn);
+        btn.onclick = () => playSong(i); container.appendChild(btn);
     });
 }
-
-// --- GATO ---
-let gatoActive = false, gatoState = ["","","","","","","","",""];
 function toggleGamesMenu() {
-    const overlay = document.getElementById('games-overlay');
-    const navBar = document.getElementById('bottom-nav-bar');
-    if(!overlay) return;
+    const overlay = document.getElementById('games-overlay'); const navBar = document.getElementById('bottom-nav-bar'); if(!overlay) return;
     if (overlay.classList.contains('hidden')) {
-        overlay.classList.remove('hidden'); showGameContainer('games-menu-container');
-        if(navBar) navBar.style.opacity = '0';
+        overlay.classList.remove('hidden'); showGameContainer('games-menu-container'); if(navBar) navBar.style.opacity = '0';
         setTimeout(() => overlay.classList.add('opacity-100'), 10);
     } else closeGamesMenu();
 }
 function closeGamesMenu() {
-    const overlay = document.getElementById('games-overlay');
-    const navBar = document.getElementById('bottom-nav-bar');
-    if(!overlay) return;
-    overlay.classList.remove('opacity-100'); 
-    if(navBar) navBar.style.opacity = '1';
-    setTimeout(() => overlay.classList.add('hidden'), 500);
-    stopAnimalTimer();
+    const overlay = document.getElementById('games-overlay'); const navBar = document.getElementById('bottom-nav-bar'); if(!overlay) return;
+    overlay.classList.remove('opacity-100'); if(navBar) navBar.style.opacity = '1';
+    setTimeout(() => overlay.classList.add('hidden'), 500); stopAnimalTimer();
 }
 function showGameContainer(id) {
-    ['games-menu-container', 'gato-container', 'animal-search-container'].forEach(cid => {
-        const el = document.getElementById(cid);
-        if(el) el.classList.add('hidden');
-    });
-    const target = document.getElementById(id);
-    if(target) target.classList.remove('hidden');
+    ['games-menu-container', 'gato-container', 'animal-search-container'].forEach(cid => { const el = document.getElementById(cid); if(el) el.classList.add('hidden'); });
+    const target = document.getElementById(id); if(target) target.classList.remove('hidden');
 }
-
 function setGatoDifficulty(diff) {
     gatoDifficulty = diff;
     const bn = document.getElementById('btn-diff-normal'), bh = document.getElementById('btn-diff-hard');
@@ -503,24 +367,15 @@ function setGatoDifficulty(diff) {
     if(bh) bh.className = diff === 'hard' ? 'py-2 rounded-full border-2 border-secondary text-secondary text-[8px] font-pixel transition-all uppercase' : 'py-2 rounded-full border border-white/10 text-[8px] font-pixel transition-all uppercase opacity-50';
     startGato();
 }
-
-function startGato() {
-    gatoState = ["","","","","","","","",""]; gatoActive = true;
-    showGameContainer('gato-container'); updateGatoUI();
-}
+function startGato() { gatoState = ["","","","","","","","",""]; gatoActive = true; showGameContainer('gato-container'); updateGatoUI(); }
 function handleGato(idx) {
-    if (!gatoActive || gatoState[idx] !== "") return;
-    gatoState[idx] = "X"; updateGatoUI();
+    if (!gatoActive || gatoState[idx] !== "") return; gatoState[idx] = "X"; updateGatoUI();
     if (checkWin("X")) { scores.player++; updateGatoUI(); showGameMsg("WIN", "win"); return; }
     if (!gatoState.includes("")) { showGameMsg("EMPATE", "draw"); return; }
     gatoActive = false;
     setTimeout(() => {
-        let move;
-        if (gatoDifficulty === 'hard') move = getBestMove(gatoState);
-        else {
-            const empty = gatoState.map((v, i) => v === "" ? i : null).filter(v => v !== null);
-            move = empty[Math.floor(Math.random() * empty.length)];
-        }
+        let move; if (gatoDifficulty === 'hard') move = getBestMove(gatoState);
+        else { const empty = gatoState.map((v, i) => v === "" ? i : null).filter(v => v !== null); move = empty[Math.floor(Math.random() * empty.length)]; }
         if(move !== undefined) {
             gatoState[move] = "O"; updateGatoUI();
             if (checkWin("O")) { scores.cpu++; updateGatoUI(); showGameMsg("LOSE", "lose"); }
@@ -530,230 +385,98 @@ function handleGato(idx) {
     }, 600);
 }
 function updateGatoUI() {
-    gatoState.forEach((val, i) => {
-        const el = document.getElementById(`gato-cell-${i}`);
-        if(el) el.innerHTML = val === "X" ? '<span class="material-symbols-outlined text-primary text-5xl">close</span>' : val === "O" ? '<span class="material-symbols-outlined text-secondary text-5xl">radio_button_unchecked</span>' : '';
-    });
-    const sp = document.getElementById('gato-score-player'), sc = document.getElementById('gato-score-cpu');
-    if(sp) sp.innerText = scores.player.toString().padStart(2,'0');
-    if(sc) sc.innerText = scores.cpu.toString().padStart(2,'0');
+    gatoState.forEach((val, i) => { const el = document.getElementById(`gato-cell-${i}`); if(el) el.innerHTML = val === "X" ? '<span class="material-symbols-outlined text-primary text-5xl">close</span>' : val === "O" ? '<span class="material-symbols-outlined text-secondary text-5xl">radio_button_unchecked</span>' : ''; });
+    const sp = document.getElementById('gato-score-player'), sc = document.getElementById('gato-score-cpu'); if(sp) sp.innerText = scores.player.toString().padStart(2,'0'); if(sc) sc.innerText = scores.cpu.toString().padStart(2,'0');
 }
 function checkWin(p) { return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(c => c.every(i => gatoState[i] === p)); }
 function showGameMsg(msg, type = "win") {
-    gatoActive = false;
-    const container = document.getElementById('romantic-message-container');
-    if(!container) return;
-    let finalMsg = "MUAJAJAJAJA SI PUDISTE JEJEJJEEJ";
-    if(type === "lose") finalMsg = "JEJEJE TE GANÉ, INTENTA OTRA VEZ ❤️";
-    if(type === "draw") finalMsg = "EMPATE... ¡CASI ME GANAS!";
+    gatoActive = false; const container = document.getElementById('romantic-message-container'); if(!container) return;
+    let finalMsg = "MUAJAJAJAJA SI PUDISTE JEJEJJEEJ"; if(type === "lose") finalMsg = "JEJEJE TE GANÉ, INTENTA OTRA VEZ ❤️"; if(type === "draw") finalMsg = "EMPATE... ¡CASI ME GANAS!";
     container.innerHTML = `<div class="bg-black/80 backdrop-blur-xl p-8 rounded-3xl border-2 border-primary animate-bounce shadow-2xl"><p class="text-primary font-pixel text-[10px] tracking-widest text-center">${finalMsg}</p></div>`;
     setTimeout(() => container.innerHTML = '', 4000);
 }
 function getBestMove(board) {
     let bestScore = -Infinity, move;
-    for (let i = 0; i < 9; i++) {
-        if (board[i] === "") {
-            board[i] = "O"; let score = minimax(board, 0, false); board[i] = "";
-            if (score > bestScore) { bestScore = score; move = i; }
-        }
-    }
+    for (let i = 0; i < 9; i++) { if (board[i] === "") { board[i] = "O"; let score = minimax(board, 0, false); board[i] = ""; if (score > bestScore) { bestScore = score; move = i; } } }
     return move;
 }
 function minimax(board, depth, isMax) {
-    if (checkWinState(board, "O")) return 10;
-    if (checkWinState(board, "X")) return -10;
-    if (!board.includes("")) return 0;
+    if (checkWinState(board, "O")) return 10; if (checkWinState(board, "X")) return -10; if (!board.includes("")) return 0;
     if (isMax) {
-        let bestScore = -Infinity;
-        for (let i = 0; i < 9; i++) { if (board[i] === "") { board[i] = "O"; bestScore = Math.max(bestScore, minimax(board, depth + 1, false)); board[i] = ""; } }
+        let bestScore = -Infinity; for (let i = 0; i < 9; i++) { if (board[i] === "") { board[i] = "O"; bestScore = Math.max(bestScore, minimax(board, depth + 1, false)); board[i] = ""; } }
         return bestScore;
     } else {
-        let bestScore = Infinity;
-        for (let i = 0; i < 9; i++) { if (board[i] === "") { board[i] = "X"; bestScore = Math.min(bestScore, minimax(board, depth + 1, true)); board[i] = ""; } }
+        let bestScore = Infinity; for (let i = 0; i < 9; i++) { if (board[i] === "") { board[i] = "X"; bestScore = Math.min(bestScore, minimax(board, depth + 1, true)); board[i] = ""; } }
         return bestScore;
     }
 }
 function checkWinState(b, p) { return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(c => c.every(i => b[i] === p)); }
-
-// --- SOPA ---
 let animalTimer = 60, animalInterval;
 const animalWordsPool = ["GIRAFA", "LEON", "ELEFANTE", "TIGRE", "HORMIGA", "CONEJO", "GATO", "PERRO", "AVISPA", "ZORRO"];
 let currentWords = [];
 function startAnimalSearch() {
-    showGameContainer('animal-search-container');
-    selectedIndices = []; animalTimer = 60;
+    showGameContainer('animal-search-container'); selectedIndices = []; animalTimer = 60;
     currentWords = animalWordsPool.sort(() => 0.5 - Math.random()).slice(0, 5).map(w => ({ word: w, found: false, indices: [] }));
-    const list = document.getElementById('word-list'); if(!list) return;
-    list.innerHTML = '';
-    currentWords.forEach(w => {
-        const li = document.createElement('li'); li.id = `word-${w.word.toLowerCase()}`;
-        li.className = "flex items-center gap-2 text-on-surface/40 font-bold text-[10px]";
-        li.innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>${w.word}`;
-        list.appendChild(li);
-    });
+    const list = document.getElementById('word-list'); if(!list) return; list.innerHTML = '';
+    currentWords.forEach(w => { const li = document.createElement('li'); li.id = `word-${w.word.toLowerCase()}`; li.className = "flex items-center gap-2 text-on-surface/40 font-bold text-[10px]"; li.innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-white/20"></div>${w.word}`; list.appendChild(li); });
     generateGrid(); startAnimalTimer();
 }
 function generateGrid() {
-    const grid = document.getElementById('animal-grid'); if(!grid) return;
-    const size = 144, letters = Array(size).fill(null);
+    const grid = document.getElementById('animal-grid'); if(!grid) return; const size = 144, letters = Array(size).fill(null);
     currentWords.forEach(w => {
-        let placed = false;
-        while (!placed) {
-            const horiz = Math.random() > 0.5, start = Math.floor(Math.random() * size), wordIdx = [];
-            let can = true;
-            for (let i = 0; i < w.word.length; i++) {
-                const idx = horiz ? start + i : start + (i * 12);
-                if (idx >= size || (horiz && Math.floor(start/12) !== Math.floor(idx/12)) || letters[idx] !== null) { can = false; break; }
-                wordIdx.push(idx);
-            }
+        let placed = false; while (!placed) {
+            const horiz = Math.random() > 0.5, start = Math.floor(Math.random() * size), wordIdx = []; let can = true;
+            for (let i = 0; i < w.word.length; i++) { const idx = horiz ? start + i : start + (i * 12); if (idx >= size || (horiz && Math.floor(start/12) !== Math.floor(idx/12)) || letters[idx] !== null) { can = false; break; } wordIdx.push(idx); }
             if (can) { wordIdx.forEach((idx, i) => letters[idx] = w.word[i]); w.indices = wordIdx; placed = true; }
         }
     });
     grid.innerHTML = '';
     letters.forEach((l, i) => {
-        const div = document.createElement('div');
-        div.className = "w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-pixel text-[10px] cursor-pointer hover:bg-white/10 rounded transition-all select-none border border-white/5";
-        div.innerText = l || "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random()*26)];
-        div.id = `animal-cell-${i}`; div.onclick = () => {
-            if (div.classList.contains('found')) return;
-            if (selectedIndices.includes(i)) { selectedIndices = selectedIndices.filter(idx => idx !== i); div.classList.remove('bg-primary/40'); }
-            else { selectedIndices.push(i); div.classList.add('bg-primary/40'); }
-            checkAnimalWords();
-        };
+        const div = document.createElement('div'); div.className = "w-8 h-8 md:w-10 md:h-10 flex items-center justify-center font-pixel text-[10px] cursor-pointer hover:bg-white/10 rounded transition-all select-none border border-white/5";
+        div.innerText = l || "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random()*26)]; div.id = `animal-cell-${i}`;
+        div.onclick = () => { if (div.classList.contains('found')) return; if (selectedIndices.includes(i)) { selectedIndices = selectedIndices.filter(idx => idx !== i); div.classList.remove('bg-primary/40'); } else { selectedIndices.push(i); div.classList.add('bg-primary/40'); } checkAnimalWords(); };
         grid.appendChild(div);
     });
 }
-function startAnimalTimer() {
-    clearInterval(animalInterval);
-    animalInterval = setInterval(() => {
-        animalTimer--;
-        const tE = document.getElementById('animal-timer-text'); if(tE) tE.innerText = `00:${String(animalTimer).padStart(2, '0')}`;
-        if (animalTimer <= 0) { clearInterval(animalInterval); showGameMsg("TIEMPO AGOTADO", "lose"); startAnimalSearch(); }
-    }, 1000);
-}
+function startAnimalTimer() { clearInterval(animalInterval); animalInterval = setInterval(() => { animalTimer--; const tE = document.getElementById('animal-timer-text'); if(tE) tE.innerText = `00:${String(animalTimer).padStart(2, '0')}`; if (animalTimer <= 0) { clearInterval(animalInterval); showGameMsg("TIEMPO AGOTADO", "lose"); startAnimalSearch(); } }, 1000); }
 function stopAnimalTimer() { clearInterval(animalInterval); }
 function checkAnimalWords() {
     currentWords.forEach(w => {
         if (!w.found && w.indices.every(idx => selectedIndices.includes(idx))) {
             w.found = true; animalTimer += 10;
-            w.indices.forEach(idx => {
-                const c = document.getElementById(`animal-cell-${idx}`);
-                if(c) { c.classList.replace('bg-primary/40', 'found'); c.classList.add('text-secondary', 'font-bold'); c.style.backgroundColor = 'rgba(0, 251, 251, 0.2)'; }
-            });
-            const el = document.getElementById(`word-${w.word.toLowerCase()}`);
-            if(el) el.className = "flex items-center gap-2 text-secondary line-through font-bold text-[10px]";
+            w.indices.forEach(idx => { const c = document.getElementById(`animal-cell-${idx}`); if(c) { c.classList.replace('bg-primary/40', 'found'); c.classList.add('text-secondary', 'font-bold'); c.style.backgroundColor = 'rgba(0, 251, 251, 0.2)'; } });
+            const el = document.getElementById(`word-${w.word.toLowerCase()}`); if(el) el.className = "flex items-center gap-2 text-secondary line-through font-bold text-[10px]";
             if (currentWords.every(word => word.found)) { clearInterval(animalInterval); showGameMsg("SINCRONIZADO", "win"); setTimeout(startAnimalSearch, 2000); }
         }
     });
 }
-function solveAnimalSearch() {
-    const w = currentWords.find(word => !word.found);
-    if(w) w.indices.forEach(idx => {
-        if(!selectedIndices.includes(idx)) {
-            selectedIndices.push(idx);
-            const c = document.getElementById(`animal-cell-${idx}`);
-            if(c) c.classList.add('bg-primary/40');
-        }
-    });
-    checkAnimalWords();
-}
-
-// --- LIBRO ---
 let currentBookPage = 0;
 const memoryPages = [
     { img: 'libro/memoria_06.jpeg', title: 'Amor a Distancia', text: 'Olaaaaaaaaaa djdjdjdjdkdkdkdkdkkdkskddk no pensé llegar hasta este punto MUEJEJEJEJE, pero mira hice este pequeña página para ti ,tal vez no es mucho pero quise que tuvieras esto,no me decidí bien que canción usar y por eso puse tres djdjdkdkdksksksksksksk,solo quiero que sepas que en verdad TEAMOOOOOOO mucho amor 😞,apresar lo que pase yo siempre te amare y no quiero soltar tu mano 😞,eres muy importante para mí y la verdad amo todo de ti 😞, nunca quiero irme de tu lado 😞' },
     { img: 'libro/memoria_07.jpeg', title: 'Superando Obstáculos', text: 'MUEJEJEJEJE tremenda foto,en fin sabes que logramos llegar a este punto no fue algo fácil, pasamos por momentos cruciales que nos hicieron ver porque nos amamos con todo el alma 😭, se que a veces sientes que lo te amo o cosas así pero te soy sincero, yo siento que suelo interrumpir tu día ya que casi siempre estás ocupada con la escuela o con cosas de tu familia y ajá ,has notado que tal vez ya no soy tan intenso como un principio y no es porque te deje de amar,si no porque he normalizado tu ausencia y ajá me adapte a tus días y prefiero no molestarte con mensajes que luego luego tal vez ni me respondes y por eso cambie un poco pero te sigo amando como el primer día 😞❤️‍🩹, perdón si te confundo :(' },
     { img: 'libro/memoria_08.jpeg', title: 'Un Futuro Juntos', text: 'Ya cumplimos muchos días juntos amor 😍, quien diría que íbamos a aguantar tanto tiempo a distancia 😭,la verdad ya muero por tenerte junto a mi y espero que lo antes posible estemos juntos amor, quiero tocar tu cachetote y besarte mucho ,y yo sé que en el fondo muy en el fondo tuyo también lo quieres pero muy en el fondo MUAJAJAJAJAJAJAJA, sabes que estoy muy enamorado de ti y la verdad también estoy muy orgulloso de lo que has logrado en toda tu vida 🥹 ❤️‍🩹,eres una niña especial que más amo y admiro, eres todo lo que un hombre puede desear tener como pareja,tal vez te sientas menos pero en realidad eres una grandiosa mujer 😭 ❤️‍🩹, estoy orgulloso de ti 🥹' },
     { img: 'libro/memoria_09.jpeg', title: 'Gachias por Todo', text: 'MUEJEJEJEJE aún sigues leyendo esto , a ver solo para ver qué si leas esto , dime qué es lo que mas amo de tu cuerpo? , para ver si lees esto djdjdkdkdksksksksksksk,en fin gachias por estar conmigo 😞 ❤️‍🩹,no soy la gran cosa pero me esfuerzo por estar a tu nivel (aunque se que tal vez en tus ojos soy malo y siempre me quieres dejar) , en fin eres mi todo amor ❤️‍🩹, solo quiero agradecerte por estos hermosos dos años juntos 😭, espero seguir adelante contigo, nunca soltar tus manos y sobre todo cumplir con lo que siempre nos prometimos en las llamadas nocturnas, muchas pero muchas gracias 🫂,y perdón por ser un tonto a veces contigo 😞,lo único de valor que tengo en mi vida eres tú ❤️‍🩹' },
-    { isPenguin: true },
-    { isFinal: true }
+    { isPenguin: true }, { isFinal: true }
 ];
-
 function toggleMemoryBook() {
-    const el = document.getElementById('memory-book-overlay');
-    const navBar = document.getElementById('bottom-nav-bar');
-    if(!el) return;
-    if (el.classList.contains('hidden')) { 
-        el.classList.remove('hidden'); 
-        renderBookPage(); 
-        if(navBar) navBar.style.opacity = '0';
-        setTimeout(() => el.classList.add('opacity-100'), 10); 
-    }
-    else { 
-        el.classList.remove('opacity-100'); 
-        if(navBar) navBar.style.opacity = '1';
-        setTimeout(() => el.classList.add('hidden'), 500); 
-    }
+    const el = document.getElementById('memory-book-overlay'), navBar = document.getElementById('bottom-nav-bar'); if(!el) return;
+    if (el.classList.contains('hidden')) { el.classList.remove('hidden'); renderBookPage(); if(navBar) navBar.style.opacity = '0'; setTimeout(() => el.classList.add('opacity-100'), 10); }
+    else { el.classList.remove('opacity-100'); if(navBar) navBar.style.opacity = '1'; setTimeout(() => el.classList.add('hidden'), 500); }
 }
-
 function renderBookPage() {
-    const v = document.getElementById('book-viewport'), p = memoryPages[currentBookPage];
-    if(!v) return;
-    if (p.isPenguin) {
-        v.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-[#1a1a2e]/90 rounded-[3rem] border-4 border-[#00fbfb] shadow-2xl p-10 text-center"><h2 class="text-[#00fbfb] font-pixel text-[12px] mb-8 tracking-widest uppercase">Lo que Admiro de Ti</h2><div onclick="talkPenguin()" class="cursor-pointer hover:scale-110 transition-transform text-8xl mb-8 filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">🐧</div><p id="penguin-text" class="text-white text-xl leading-relaxed font-light text-center w-full">Haz clic en el pingüino...</p></div>`;
-    } else if (p.isFinal) {
-        v.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-black/80 rounded-[3rem] border-4 border-primary p-12 shadow-2xl text-center"><h2 class="text-5xl text-primary font-serif italic mb-10 uppercase w-full text-center">Nuestro Segundo Aniversario</h2><p class="text-white/90 text-xl font-light leading-relaxed max-w-4xl italic">Muaaaaaaak muaaaaaaak muaaaaaaak ❤️‍🩹, gachias por estos dos años ❤️‍🩹, eres mi todo tode MUEJEJEJEJE 🥺, espero que nunca me cambies por alguien que si puedas ver y sobre todo que no me escondas más cosas 😞, espero que te haya gustado este pequeño regalo 🎁, me rompí la cabeza como dos veces pero ahí está MUAJAJAJAJAJAJAJA, tal vez ni te guste el regalo pero bueno, aún te amo mucho y nunca te dejare de amar pase lo que pase ❤️‍🩹, vamos por un año más ❤️‍🩹, gachias por ser mi mujer 🫦,en verdad eres muy hermosa mi Abi 🥺❤️‍🩹, gachias por aguantar esta distancia que a veces nos rompe 😞</p><div class="mt-12 text-primary font-pixel text-[8px] tracking-[0.5em]">FIN DEL CAPÍTULO DOS</div></div>`;
-    } else {
-        v.innerHTML = `<div class="w-full h-full flex flex-col md:flex-row items-center justify-center gap-10 bg-[#1a1a2e]/90 rounded-[3rem] border-2 border-white/10 p-10 shadow-2xl overflow-hidden"><div class="w-full md:w-1/2 h-full book-img-container"><img src="${p.url || p.img}" class="pixel-bg"></div><div class="w-full md:w-1/2 overflow-y-auto max-h-full"><h2 class="text-3xl text-primary font-headline font-bold mb-6 italic border-b border-primary/30 pb-2 uppercase text-center">${p.title}</h2><p class="text-white/80 text-lg font-light leading-relaxed pr-4 text-left">${p.text}</p></div></div>`;
-    }
-    const prev = document.getElementById('prev-page'), next = document.getElementById('next-page');
-    if(prev) prev.disabled = currentBookPage === 0;
-    if(next) next.disabled = currentBookPage === memoryPages.length - 1;
+    const v = document.getElementById('book-viewport'), p = memoryPages[currentBookPage]; if(!v) return;
+    if (p.isPenguin) v.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-[#1a1a2e]/90 rounded-[3rem] border-4 border-[#00fbfb] shadow-2xl p-10 text-center"><h2 class="text-[#00fbfb] font-pixel text-[12px] mb-8 tracking-widest uppercase">Lo que Admiro de Ti</h2><div onclick="talkPenguin()" class="cursor-pointer hover:scale-110 transition-transform text-8xl mb-8 filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">🐧</div><p id="penguin-text" class="text-white text-xl leading-relaxed font-light text-center w-full">Haz clic en el pingüino...</p></div>`;
+    else if (p.isFinal) v.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center bg-black/80 rounded-[3rem] border-4 border-primary p-12 shadow-2xl text-center"><h2 class="text-5xl text-primary font-serif italic mb-10 uppercase w-full text-center">Nuestro Segundo Aniversario</h2><p class="text-white/90 text-xl font-light leading-relaxed max-w-4xl italic">Muaaaaaaak muaaaaaaak muaaaaaaak ❤️‍🩹, gachias por estos dos años ❤️‍🩹, eres mi todo tode MUEJEJEJEJE 🥺, espero que nunca me cambies por alguien que si puedas ver y sobre todo que no me escondas más cosas 😞, espero que te haya gustado este pequeño regalo 🎁, me rompí la cabeza como dos veces pero ahí está MUAJAJAJAJAJAJAJA, tal vez ni te guste el regalo pero bueno, aún te amo mucho y nunca te dejare de amar pase lo que pase ❤️‍🩹, vamos por un año más ❤️‍🩹, gachias por ser mi mujer 🫦,en verdad eres muy hermosa mi Abi 🥺❤️‍🩹, gachias por aguantar esta distancia que a veces nos rompe 😞</p><div class="mt-12 text-primary font-pixel text-[8px] tracking-[0.5em]">FIN DEL CAPÍTULO DOS</div></div>`;
+    else v.innerHTML = `<div class="w-full h-full flex flex-col md:flex-row items-center justify-center gap-10 bg-[#1a1a2e]/90 rounded-[3rem] border-2 border-white/10 p-10 shadow-2xl overflow-hidden"><div class="w-full md:w-1/2 h-full book-img-container"><img src="${p.url || p.img}" class="pixel-bg"></div><div class="w-full md:w-1/2 overflow-y-auto max-h-full"><h2 class="text-3xl text-primary font-headline font-bold mb-6 italic border-b border-primary/30 pb-2 uppercase text-center">${p.title}</h2><p class="text-white/80 text-lg font-light leading-relaxed pr-4 text-left">${p.text}</p></div></div>`;
+    const prev = document.getElementById('prev-page'), next = document.getElementById('next-page'); if(prev) prev.disabled = currentBookPage === 0; if(next) next.disabled = currentBookPage === memoryPages.length - 1;
 }
-
-const prideReasons = [
-    "De tu esfuerzo en todos tus días sin importar qué", "De tu valentía para hacer las cosas difíciles", "De tus metas y sueños en la vida", "De lo pura e inocente que eres", 
-    "De lo religiosa que eres y que vayas a la iglesia", "De tu preocupación por mi bienestar", "De tu bondad infinita con la gente", "De que seas increíble en todo lo que haces", 
-    "De lo responsable que eres con tus cosas", "De que seas chula de cuerpo y alma", "De que me hagas sentir orgulloso de tenerte", "De que nunca me sueltas la mano en momentos difíciles", 
-    "De tu confianza en ti misma aunque a veces dudes", "De tu optimismo y humor único", "De tu humildad", "De tu capacidad de resolver problemas", 
-    "De que no te rindes fácil ni conmigo ni con nada", "De lo fuerte que eres aunque no lo veas", "De que has cambiado para estar bien conmigo", "De la grandiosa mujer que eres"
-];
-function talkPenguin() { 
-    const t = document.getElementById('penguin-text');
-    if(t) gsap.to(t, { opacity: 0, duration: 1, onComplete: () => {
-        t.innerText = prideReasons[Math.floor(Math.random()*prideReasons.length)];
-        gsap.to(t, { opacity: 1, duration: 0.4 });
-    }});
-}
+const prideReasons = ["De tu esfuerzo en todos tus días sin importar qué", "De tu valentía para hacer las cosas difíciles", "De tus metas y sueños en la vida", "De lo pura e inocente que eres", "De lo religiosa que eres y que vayas a la iglesia", "De tu preocupación por mi bienestar", "De tu bondad infinita con la gente", "De que seas increíble en todo lo que haces", "De lo responsable que eres con tus cosas", "De que seas chula de cuerpo y alma", "De que me hagas sentir orgulloso de tenerte", "De que nunca me sueltas la mano en momentos difíciles", "De tu confianza en ti misma aunque a veces dudes", "De tu optimismo y humor único", "De tu humildad", "De tu capacidad de resolver problemas", "De que no te rindes fácil ni conmigo ni con nada", "De lo fuerte que eres aunque no lo veas", "De que has cambiado para estar bien conmigo", "De la grandiosa mujer que eres"];
+function talkPenguin() { const t = document.getElementById('penguin-text'); if(t) gsap.to(t, { opacity: 0, duration: 1, onComplete: () => { t.innerText = prideReasons[Math.floor(Math.random()*prideReasons.length)]; gsap.to(t, { opacity: 1, duration: 0.4 }); } }); }
 function nextPage() { if(currentBookPage < memoryPages.length-1) { currentBookPage++; renderBookPage(); } }
 function prevPage() { if(currentBookPage > 0) { currentBookPage--; renderBookPage(); } }
+const loveReasons = ["Porque te has vuelto parte fundamental de mi vida", "Tus cartas que me hacen llorar de emoción", "Tus regaños que me hacen saber que te importo", "Tu preocupación por mi bienestar", "Tus fotos que me mandas", "Tu bondad con la gente", "Tu forma de decirme que me quieres", "La vibra que cargas y me transfieres", "Nuestros momentos siendo nosotros mismos", "Tu estilo de vestimenta único", "Tu manera de ser la mejor mujer del mundo", "Nuestras platicas nocturnas habalndo de lo que sea", "Lo dormilona que eres", "Tu hermosa voz que me cura el alma", "Tus besos a través de la pantalla", "Tu lealtad en nuestra relación", "Tu sonrisa que me cautivó por completo", "Tus preciosas manos que espero tocar pronto", "Tus llamadas que son mi lugar seguro", "La tranquilidad que me da tu presencia", "Tus cachetitos que quiero comer a besos", "Tu color canela tentación", "Tus inseguridades que yo amo con el alma"];
+function showRomanticMessage() { const container = document.getElementById('romantic-message-container'); if(!container) return; const msg = loveReasons[Math.floor(Math.random()*loveReasons.length)]; container.innerHTML = `<div class="bg-black/60 backdrop-blur-md px-10 py-4 rounded-full border border-tertiary/30 shadow-[0_0_30px_rgba(255,81,250,0.3)] animate-pulse inline-block"><p class="text-tertiary font-pixel text-xs tracking-widest uppercase text-center">RAZÓN POR AMARTE: ${msg}</p></div>`; setTimeout(() => { if(container.firstChild) gsap.to(container.firstChild, { opacity: 0, duration: 1, onComplete: () => container.innerHTML = '' })}, 3000); }
 
-const loveReasons = [
-    "Porque te has vuelto parte fundamental de mi vida", "Tus cartas que me hacen llorar de emoción", "Tus regaños que me hacen saber que te importo", "Tu preocupación por mi bienestar", 
-    "Tus fotos que me mandas", "Tu bondad con la gente", "Tu forma de decirme que me quieres", "La vibra que cargas y me transfieres", 
-    "Nuestros momentos siendo nosotros mismos", "Tu estilo de vestimenta único", "Tu manera de ser la mejor mujer del mundo", "Nuestras platicas nocturnas habalndo de lo que sea"
-    , "Lo dormilona que eres", "Tu hermosa voz que me cura el alma", "Tus besos a través de la pantalla", "Tu lealtad en nuestra relación", 
-    "Tu sonrisa que me cautivó por completo", "Tus preciosas manos que espero tocar pronto", "Tus llamadas que son mi lugar seguro", "La tranquilidad que me da tu presencia", 
-    "Tus cachetitos que quiero comer a besos", "Tu color canela tentación", "Tus inseguridades que yo amo con el alma"
-];
-function showRomanticMessage() {
-    const container = document.getElementById('romantic-message-container');
-    if(!container) return;
-    const msg = loveReasons[Math.floor(Math.random()*loveReasons.length)];
-    container.innerHTML = `<div class="bg-black/60 backdrop-blur-md px-10 py-4 rounded-full border border-tertiary/30 shadow-[0_0_30px_rgba(255,81,250,0.3)] animate-pulse inline-block"><p class="text-tertiary font-pixel text-xs tracking-widest uppercase text-center">RAZÓN POR AMARTE: ${msg}</p></div>`;
-    setTimeout(() => { if(container.firstChild) gsap.to(container.firstChild, { opacity: 0, duration: 1, onComplete: () => container.innerHTML = '' })}, 3000);
-}
-
-function updateCountdown() {
-    const diff = targetDate - new Date().getTime();
-    const d = Math.max(0, Math.floor(diff/86400000)), h = Math.max(0, Math.floor((diff%86400000)/3600000)), m = Math.max(0, Math.floor((diff%3600000)/60000)), s = Math.max(0, Math.floor((diff%60000)/1000));
-    
-    const eD = document.getElementById('cd-days'), eH = document.getElementById('cd-hours'), eM = document.getElementById('cd-minutes'), eS = document.getElementById('cd-seconds');
-    if(eD) eD.innerText = d.toString().padStart(2, '0');
-    if(eH) eH.innerText = h.toString().padStart(2, '0');
-    if(eM) eM.innerText = m.toString().padStart(2, '0');
-    if(eS) eS.innerText = s.toString().padStart(2, '0');
-
-    // Control del botón de entrada
-    const startBtn = document.getElementById('start-btn');
-    if (diff <= 0 && startBtn && startBtn.disabled) {
-        startBtn.disabled = false;
-        startBtn.innerText = "COMENZAR";
-        startBtn.className = "px-12 py-4 bg-gradient-to-r from-primary to-primary-dim rounded-full text-white font-bold tracking-tight transition-all transform active:scale-95 text-lg min-w-[240px] z-50 uppercase shadow-[0_0_20px_rgba(202,152,255,0.3)]";
-    }
-}
-
-// Acceso Secreto (Doble clic en ANIVERSARIO 2026)
 document.addEventListener('DOMContentLoaded', () => {
     const secretTrigger = document.getElementById('secret-trigger');
     if(secretTrigger) {
