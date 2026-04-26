@@ -199,43 +199,44 @@ function launchCelebration() {
     if (celebrationLaunched) return;
     celebrationLaunched = true;
     const container = document.body;
-    const colors = ['#ca98ff', '#00fbfb', '#ff51fa', '#ffffff', '#fff700'];
+    const colors = ['#ca98ff', '#00fbfb', '#ffffff'];
     
-    for(let f=0; f<10; f++) {
+    for(let f=0; f<3; f++) {
         setTimeout(() => {
             const rocket = document.createElement('div');
-            rocket.className = 'fixed w-1.5 h-6 bg-white rounded-full';
+            rocket.className = 'fixed w-1 h-4 bg-white rounded-full';
             rocket.style.zIndex = '9999';
-            rocket.style.left = (10 + Math.random() * 80) + '%';
+            rocket.style.left = (25 + Math.random() * 50) + '%';
             rocket.style.bottom = '-20px';
             container.appendChild(rocket);
             
-            const targetY = 200 + Math.random() * 400;
+            const targetY = 250 + Math.random() * 200;
             gsap.to(rocket, {
-                y: -targetY, duration: 1.2, ease: "power2.out",
+                y: -targetY, duration: 1.5, ease: "power1.out",
                 onComplete: () => {
-                    for(let i=0; i<40; i++) {
+                    for(let i=0; i<20; i++) {
                         const p = document.createElement('span');
                         p.className = 'fixed material-symbols-outlined pointer-events-none';
                         p.innerText = 'star'; p.style.zIndex = '9999';
                         p.style.left = rocket.style.left;
                         p.style.top = (window.innerHeight - targetY) + 'px';
                         p.style.color = colors[Math.floor(Math.random() * colors.length)];
-                        p.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                        p.style.textShadow = `0 0 30px ${p.style.color}`;
+                        p.style.fontSize = '12px';
+                        p.style.textShadow = `0 0 10px ${p.style.color}`;
                         container.appendChild(p);
+
                         const angle = Math.random() * Math.PI * 2;
-                        const dist = Math.random() * 400 + 100;
+                        const dist = Math.random() * 150 + 50;
                         gsap.to(p, {
                             x: Math.cos(angle) * dist, y: Math.sin(angle) * dist,
-                            opacity: 0, scale: 3, rotation: Math.random() * 720,
-                            duration: 3, ease: "power3.out", onComplete: () => p.remove()
+                            opacity: 0, scale: 1.5, rotation: 180,
+                            duration: 2.5, ease: "power2.out", onComplete: () => p.remove()
                         });
                     }
                     rocket.remove();
                 }
             });
-        }, f * 400);
+        }, f * 1800);
     }
 }
 
